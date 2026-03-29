@@ -1,25 +1,66 @@
-# Python
+# =========================
+# Python / FastAPI
+# =========================
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*.so
+.python-version
 .venv/
 venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
 
-# Node
+# =========================
+# Node / Vite / Vue
+# =========================
 node_modules/
 dist/
+.vite/
+*.local
+pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Env
+# =========================
+# Env files
+# 保留示例文件，忽略真实配置
+# =========================
 .env
 .env.*
+!.env.example
 
+# =========================
 # Runtime data
+# 这些是运行产物，不提交
+# =========================
 storage/vector_db/
 storage/history/
 storage/logs/
+backend/storage/
+frontend/.cache/
 
+# =========================
+# Knowledge base raw assets
+# 如果原始扫描件/压缩包过大，建议不要直接提交
+# 按需保留 README 和示例文件
+# =========================
+knowledge_base/raw/*.zip
+knowledge_base/raw/*.rar
+knowledge_base/raw/*.7z
+knowledge_base/raw/*.pdf
+knowledge_base/raw/*.doc
+knowledge_base/raw/*.docx
+knowledge_base/raw/*.ppt
+knowledge_base/raw/*.pptx
+
+# =========================
 # IDE / OS
+# =========================
 .vscode/
 .idea/
 .DS_Store
+Thumbs.db
