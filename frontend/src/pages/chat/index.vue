@@ -84,92 +84,114 @@ const sendMessage = async (preset?: string) => {
 
 <template>
   <div class="chat-page">
-    <div class="chat-header">
-      <div class="chat-title">校园智能问答</div>
-      <div class="chat-desc">基于学校资料进行问答，回答尽量贴近官方口径</div>
-    </div>
+    <section class="chat-hero">
+      <div class="chat-hero-title">智能问答</div>
+      <div class="chat-hero-desc">基于学校资料检索回答，适合做校园政策、选课、图书馆等场景演示。</div>
+    </section>
 
-    <div class="quick-questions">
-      <van-button
-        v-for="item in exampleQuestions"
-        :key="item"
-        size="small"
-        round
-        plain
-        type="primary"
-        @click="sendMessage(item)"
-      >
-        {{ item }}
-      </van-button>
-    </div>
-
-    <div ref="listRef" class="message-list">
-      <div v-for="item in messages" :key="item.id" class="message-row" :class="item.role">
-        <div class="message-bubble">
-          {{ item.content || (item.role === "assistant" && sending ? "正在生成回答..." : "") }}
+    <section class="quick-panel">
+      <div class="quick-title">快捷问题</div>
+      <div class="quick-list">
+        <div v-for="item in exampleQuestions" :key="item" class="quick-chip" @click="sendMessage(item)">
+          {{ item }}
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="input-panel">
-      <van-field
-        v-model="inputValue"
-        rows="2"
-        autosize
-        type="textarea"
-        maxlength="500"
-        placeholder="请输入你的问题，例如：新生报到流程是什么？"
-      />
-      <van-button type="primary" block :loading="sending" :disabled="!canSend" @click="sendMessage()">
-        发送
+    <section ref="listRef" class="message-panel">
+      <div v-for="item in messages" :key="item.id" class="message-row" :class="item.role">
+        <div v-if="item.role === 'assistant'" class="avatar ai">AI</div>
+        <div class="message-bubble" :class="item.role">
+          {{ item.content || (item.role === "assistant" && sending ? "正在生成回答..." : "") }}
+        </div>
+        <div v-if="item.role === 'user'" class="avatar user">我</div>
+      </div>
+    </section>
+
+    <section class="composer">
+      <div class="composer-box">
+        <van-field
+          v-model="inputValue"
+          rows="2"
+          autosize
+          type="textarea"
+          maxlength="500"
+          placeholder="请输入你的问题，例如：新生报到流程是什么？"
+        />
+      </div>
+      <van-button class="send-btn" type="primary" block :loading="sending" :disabled="!canSend" @click="sendMessage()">
+        发送问题
       </van-button>
-    </div>
+    </section>
   </div>
 </template>
 
 <style scoped>
 .chat-page {
   min-height: 100%;
-  padding: 12px;
-  background: #f7f8fa;
+  padding: 14px 14px 22px;
+  background:
+    radial-gradient(circle at top left, rgba(42, 126, 255, 0.14), transparent 22%),
+    linear-gradient(180deg, #eff5ff 0%, #f8fafc 36%, #f7f8fa 100%);
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
 }
-.chat-header,
-.quick-questions,
-.message-list,
-.input-panel {
-  background: #fff;
-  border-radius: 16px;
-  padding: 14px;
+.chat-hero {
+  padding: 18px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #0f5ae0 0%, #4f8dff 52%, #8ab8ff 100%);
+  color: #fff;
+  box-shadow: 0 16px 34px rgba(15, 90, 224, 0.22);
 }
-.chat-title {
-  font-size: 20px;
+.chat-hero-title {
+  font-size: 24px;
   font-weight: 700;
-  color: #1f2329;
 }
-.chat-desc {
+.chat-hero-desc {
   margin-top: 8px;
   font-size: 13px;
-  color: #646566;
-  line-height: 1.6;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.88);
 }
-.quick-questions {
+.quick-panel,
+.message-panel,
+.composer {
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+  backdrop-filter: blur(12px);
+}
+.quick-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 12px;
+}
+.quick-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
-.message-list {
-  flex: 1;
-  min-height: 320px;
+.quick-chip {
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #f4f8ff 0%, #eef4ff 100%);
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #dbeafe;
+}
+.message-panel {
+  min-height: 360px;
   max-height: 52vh;
   overflow-y: auto;
 }
 .message-row {
   display: flex;
-  margin-bottom: 12px;
+  align-items: flex-end;
+  gap: 8px;
+  margin-bottom: 14px;
 }
 .message-row.user {
   justify-content: flex-end;
@@ -177,26 +199,54 @@ const sendMessage = async (preset?: string) => {
 .message-row.assistant {
   justify-content: flex-start;
 }
+.avatar {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.avatar.ai {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  color: #1d4ed8;
+}
+.avatar.user {
+  background: linear-gradient(135deg, #2563eb 0%, #5b9aff 100%);
+  color: #fff;
+}
 .message-bubble {
-  max-width: 82%;
-  padding: 10px 12px;
-  border-radius: 14px;
-  line-height: 1.7;
+  max-width: 76%;
+  padding: 12px 14px;
+  border-radius: 18px;
+  line-height: 1.8;
   font-size: 14px;
   white-space: pre-wrap;
   word-break: break-word;
 }
-.message-row.user .message-bubble {
-  background: #1989fa;
+.message-bubble.user {
+  background: linear-gradient(135deg, #2563eb 0%, #5b9aff 100%);
   color: #fff;
+  border-bottom-right-radius: 6px;
+  box-shadow: 0 12px 22px rgba(37, 99, 235, 0.2);
 }
-.message-row.assistant .message-bubble {
-  background: #f2f3f5;
-  color: #323233;
+.message-bubble.assistant {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  color: #334155;
+  border: 1px solid #e8eef6;
+  border-bottom-left-radius: 6px;
 }
-.input-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.composer-box {
+  padding: 6px;
+  border-radius: 18px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+}
+.send-btn {
+  margin-top: 12px;
+  height: 44px;
+  border-radius: 14px;
 }
 </style>
