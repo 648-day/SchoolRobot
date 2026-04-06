@@ -1,0 +1,45 @@
+# ============================================
+# 双重向量检索系统依赖库
+# ============================================
+
+# 核心依赖
+chromadb>=0.4.22,<0.5.0
+sentence-transformers>=2.2.2
+pyyaml>=6.0
+numpy>=1.24.0,<2.0.0
+
+# PyTorch (GPU支持)
+torch>=2.0.0
+torchvision>=0.15.0
+
+# 文本处理
+tqdm>=4.65.0
+langchain>=0.1.0
+langchain-community>=0.0.20
+
+# 可选依赖（用于高级功能）
+# transformers>=4.30.0
+# datasets>=2.14.0
+# accelerate>=0.24.0
+
+# 开发工具（可选）
+# pytest>=7.4.0
+# black>=23.0.0
+# flake8>=6.0.0
+
+# ============================================
+# 安装说明：
+# 
+# 1. 基础安装：
+#    pip install -r requirements.txt
+#
+# 2. GPU支持（CUDA 11.8）：
+#    pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+#
+# 3. GPU支持（CUDA 12.1）：
+#    pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+#
+# 4. 国内镜像加速：
+#    pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+#
+# ============================================

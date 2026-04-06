@@ -1,0 +1,56 @@
+{
+  "build_time": "2026-04-06T14:20:13.548601",
+  "config": {
+    "docs_directory": "d:/SchoolRobot-main/knowledge_base/cleaned",
+    "vectorstore_directory": "d:/SchoolRobot-main/vectorstore/chroma",
+    "persist_directory": "d:/SchoolRobot-main/vectorstore/chroma",
+    "embedding_model_name": "BAAI/bge-large-zh-v1.5",
+    "model_kwargs": {
+      "device": "cuda"
+    },
+    "encode_kwargs": {
+      "normalize_embeddings": true
+    },
+    "chunk_size": 800,
+    "chunk_overlap": 50,
+    "min_chunk_size": 100,
+    "supported_extensions": [
+      ".md"
+    ],
+    "recursive_scan": true,
+    "encoding": "utf-8",
+    "collection_name": "school_documents",
+    "log_level": "INFO",
+    "use_dual_vector": true,
+    "content_weight": 0.6,
+    "structure_weight": 0.4,
+    "enable_context": true,
+    "context_window": 1
+  },
+  "stats": {
+    "load": {
+      "total_files": 28,
+      "success_count": 28,
+      "failed_count": 0,
+      "total_chars": 99661,
+      "load_time": 0.023370027542114258,
+      "failed_files": [],
+      "failed_reasons": []
+    },
+    "split": {
+      "total_chunks": 229,
+      "total_documents": 28,
+      "avg_chunks_per_doc": 8.178571428571429,
+      "split_time": 0.04129958152770996
+    },
+    "vectorstore": {
+      "total_chunks": 229,
+      "build_time": 15.011472940444946,
+      "persist_directory": "d:/SchoolRobot-main/vectorstore/chroma",
+      "collection_name": "school_documents",
+      "content_vectors": 229,
+      "structure_vectors": 229,
+      "use_dual_vector": true
+    }
+  }
+}

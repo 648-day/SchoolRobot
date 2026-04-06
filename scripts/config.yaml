@@ -1,0 +1,40 @@
+# 向量数据库构建配置文件
+# 配置说明：
+#   - 路径配置支持绝对路径和相对路径
+#   - 模型配置使用BAAI/bge-large-zh-v1.5
+#   - 分块配置已优化：更细粒度分块
+
+# 文档路径配置
+docs_directory: "d:/SchoolRobot-main/knowledge_base/cleaned"
+vectorstore_directory: "d:/SchoolRobot-main/vectorstore/chroma"
+
+# 向量模型配置
+embedding_model_name: "BAAI/bge-large-zh-v1.5"
+model_kwargs:
+  device: "cuda"
+encode_kwargs:
+  normalize_embeddings: true
+
+# 文本分块配置（优化：更细粒度分块）
+chunk_size: 800
+chunk_overlap: 50
+min_chunk_size: 100
+
+# 文档处理配置
+supported_extensions:
+  - ".md"
+recursive_scan: true
+encoding: "utf-8"
+
+# 向量库配置
+collection_name: "school_documents"
+
+# 双重向量检索配置
+use_dual_vector: true
+content_weight: 0.6
+structure_weight: 0.4
+enable_context: true
+context_window: 1
+
+# 日志配置
+log_level: "INFO"

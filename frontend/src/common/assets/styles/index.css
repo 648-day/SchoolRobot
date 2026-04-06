@@ -1,0 +1,56 @@
+/* 全局 CSS 变量 */
+@import url("./variables.css");
+/* View Transition */
+@import url("./view-transition.css");
+
+html {
+  height: 100%;
+}
+
+/* 灰色模式 */
+html.grayscale-mode {
+  filter: grayscale(1);
+}
+
+/* 色弱模式 */
+html.colorblind-mode {
+  filter: invert(0.8);
+}
+
+body {
+  height: 100%;
+  color: var(--mobvue-body-text-color);
+  background-color: var(--mobvue-body-bg-color);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--van-base-font);
+  /* 禁止 iOS 和 macOS 系统默认的橡皮筋效果 */
+  overflow: hidden;
+}
+
+#app {
+  height: 100% !important;
+}
+
+/* 隐藏滚动条样式 */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a,
+a:focus,
+a:hover {
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
