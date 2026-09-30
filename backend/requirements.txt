@@ -1,3 +1,8 @@
 fastapi
 uvicorn
 pydantic
+httpx
+python-dotenv
+
+# chroma 检索模式为可选依赖（chromadb、sentence-transformers），
+# 仅需在启用 RETRIEVAL_MODE=chroma 时安装，固定版本见 backend/requirements-chroma.txt。
