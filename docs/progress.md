@@ -22,7 +22,7 @@ Codex 独立浏览器验收通过（2026-09-30，真实 Vite :3333 + FastAPI :80
 | 分支 | `xiangliang`（只在本分支实现；未切分支、未操作其他审查目录） |
 | C 职责 | `advanced_search`、Ollama 调用、基础提示词、`POST /chat`、RAG 测试报告；**个人中心（历史记录页 / 清空历史 / 设置 / 关于我们）、演示视频、新生指引和课程知识点资料**（后三项属后续阶段） |
 | 本轮范围 | 个人中心前端（页面 / 设置 / 关于 / 服务状态）与历史、健康 API 适配；历史后端 / 记忆 / SSE 属 A；知识库浏览与向量构建属 B |
-| 版本控制 | 用户已于 2026-09-30 明确授权：本阶段验收后提交并推送 `xiangliang`，**由 Codex 执行**；当前状态：**待 Codex 验收后提交**。C 不执行 stage / commit / push，不创建 PR、不合并 main，未删除文件 |
+| 版本控制 | 按用户 2026-09-30 授权，Codex 已提交并推送阶段代码 `75691f4` 至 `origin/xiangliang`，远程哈希核验一致。OpenCode 负责实现，Codex 负责审查与提交；未创建 PR、未合并 main、未删除文件 |
 
 ## 3. 第 1 阶段目标与验收（keyword / API 里程碑已验收）
 
@@ -218,8 +218,9 @@ pnpm exec eslint <本轮文件> # 退出 0（只针对本轮新增 / 修改文�
 
 ## 10. 下一步
 
-1. **提交与推送**：本阶段验收通过后，由 Codex 按用户 2026-09-30 的授权提交并推送 `xiangliang`；
-   C 不直接 stage / commit / push，不创建 PR、不合并 main。
+1. **阶段代码已交付**：[75691f4](https://github.com/648-day/SchoolRobot/commit/75691f45ca694874d7cda66f89b2999ea9a53bd3)
+   已于 2026-09-30 推送至 `xiangliang`，`git ls-remote` 核验通过。用户原有的
+   `frontend/types/auto/components.d.ts` 改动原样保留在工作区，未纳入提交。
 2. **A 接口联调（历史 / 记忆 / SSE）**：A 交付后联调历史数据展示与真实清空；个人中心**不依赖 BGE**。
 3. **BGE / 向量检索（后端，与个人中心分开）**：依赖与本地模型就绪后安装
    `backend/requirements-chroma.txt` 做真实 Chroma + BGE 端到端验证并校准阈值（当前只有假 embedding 冒烟）。
