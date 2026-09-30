@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "name": "C 检索开发回归小样本（非正式评测集）",
+  "description": "学生 C 维护的小规模开发回归集：正例证据均取自 knowledge_base/cleaned 原文并由测试逐条核对；只用于本地开发回归与 Chroma 真实库的准备性验证。样本量小、覆盖面有限，不能泛化，不构成 B 的正式评测集或独立测试集，也不要据此宣称完整 Recall@K。负例为原文没有的具体信息或域外问题。",
+  "cases": [
+    {
+      "id": "choose-course-years",
+      "type": "positive",
+      "query": "本科生弹性学习年限是多少年",
+      "expected_source": "knowledge_base/cleaned/20.大连大学本科生选课管理办法.md",
+      "evidence": {
+        "keywords": ["四年制本科为3至6年", "五年制本科为4至7年"],
+        "quote": "本科生弹性学习年限为四年制本科为 3 至 6 年，五年制本科为 4 至 7 年。"
+      }
+    },
+    {
+      "id": "choose-course-credits",
+      "type": "positive",
+      "query": "每学期选修多少学分才能在规定年限内毕业",
+      "expected_source": "knowledge_base/cleaned/20.大连大学本科生选课管理办法.md",
+      "evidence": {
+        "keywords": ["每学期应选修15—35学分课程", "方可在规定年限内毕业"],
+        "quote": "每学期应选修 15—35 学分课程并获得学分，方可在规定年限内毕业。"
+      }
+    },
+    {
+      "id": "choose-course-drop",
+      "type": "positive",
+      "query": "选课后没有办理退选手续又不参加课程考核会怎么处理",
+      "expected_source": "knowledge_base/cleaned/20.大连大学本科生选课管理办法.md",
+      "evidence": {
+        "keywords": ["该课程成绩记为零分或不通过", "不能取得相应的学分"],
+        "quote": "该课程成绩记为零分或不通过，不能取得相应的学分。"
+      }
+    },
+    {
+      "id": "exam-room-late",
+      "type": "positive",
+      "query": "考试迟到多久不得参加考试",
+      "expected_source": "knowledge_base/cleaned/22.大连大学考场规则.md",
+      "evidence": {
+        "keywords": ["迟到20分钟", "按旷考处理"],
+        "quote": "迟到 20分钟（含 20 分钟）以上者，不得参加考试，按旷考处理。"
+      }
+    },
+    {
+      "id": "exam-room-leave",
+      "type": "positive",
+      "query": "考试开始多少分钟以后才准予交卷出场",
+      "expected_source": "knowledge_base/cleaned/22.大连大学考场规则.md",
+      "evidence": {
+        "keywords": ["考试开始30分钟", "才准予交卷出场"],
+        "quote": "考试开始 30 分钟（含 30分钟）以后，才准予交卷出场。"
+      }
+    },
+    {
+      "id": "exam-cheat-punish",
+      "type": "positive",
+      "query": "考试作弊会给予什么处分",
+      "expected_source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+      "evidence": {
+        "keywords": ["本次考试成绩无效取消二考资格", "留校察看或开除学籍处分"],
+        "quote": "本次考试成绩无效取消二考资格，视情节轻重给予留校察看或开除学籍处分。"
+      }
+    },
+    {
+      "id": "exam-discipline-punish",
+      "type": "positive",
+      "query": "考试违纪会受到什么处理",
+      "expected_source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+      "evidence": {
+        "keywords": ["取消二考资格", "警告或严重警告处分"],
+        "quote": "本次考试成绩无效，取消二考资格，并视情节轻重给予警告或严重警告处分。"
+      }
+    },
+    {
+      "id": "dorm-hair-dryer",
+      "type": "positive",
+      "query": "宿舍里可以使用电吹风吗",
+      "expected_source": "knowledge_base/cleaned/27.大连大学学生宿舍管理规定.md",
+      "evidence": {
+        "keywords": ["禁止使用或存放发热类大功率电器", "电吹风"],
+        "quote": "禁止使用或存放发热类大功率电器，如：电炉、热得快、电褥子、电吹风、电饭锅等电器；"
+      }
+    },
+    {
+      "id": "dorm-visitor",
+      "type": "positive",
+      "query": "宿舍来访客人最晚什么时候离开",
+      "expected_source": "knowledge_base/cleaned/27.大连大学学生宿舍管理规定.md",
+      "evidence": {
+        "keywords": ["来访客人要在宿舍楼关门前离开", "禁止留宿"],
+        "quote": "来访客人要在宿舍楼关门前离开，禁止留宿，离开宿舍时要到门卫室注销登记。"
+      }
+    },
+    {
+      "id": "dorm-check-grades",
+      "type": "positive",
+      "query": "寝室检查结果评定分为哪几类",
+      "expected_source": "knowledge_base/cleaned/28.大连大学学生寝室安全、纪律、卫生检查标准.md",
+      "evidence": {
+        "keywords": ["检查结果评定标准分为", "脏乱差"],
+        "quote": "检查结果评定标准分为：⑴达标、⑵不达标、⑶脏乱差、⑷违纪，达标寝室不发送《学生寝室安全、纪律、卫生检查通知单》。"
+      }
+    },
+    {
+      "id": "degree-cheat",
+      "type": "positive",
+      "query": "在校期间因考试作弊受过处分还能授予学士学位吗",
+      "expected_source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+      "evidence": {
+        "keywords": ["因考试作弊受处分者", "不授予学士学位"],
+        "quote": "在校学习期间，因考试作弊受处分者。"
+      }
+    },
+    {
+      "id": "degree-course-score",
+      "type": "positive",
+      "query": "学位课程考核成绩要达到多少分才能授予学士学位",
+      "expected_source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+      "evidence": {
+        "keywords": ["学位课程考核成绩达到70分"],
+        "quote": "培养方案中设置的学位课程考核成绩达到 70 分。"
+      }
+    },
+    {
+      "id": "scholarship-models",
+      "type": "positive",
+      "query": "大学生标兵奖学金每年评选多少人，金额是多少",
+      "expected_source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+      "evidence": {
+        "keywords": ["评选10名大学生标兵", "奖学金金额3000元"],
+        "quote": "全校每年评选10名大学生标兵，奖学金金额3000元。"
+      }
+    },
+    {
+      "id": "scholarship-first-class",
+      "type": "positive",
+      "query": "优秀学生一等奖学金金额和绩点要求是什么",
+      "expected_source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+      "evidence": {
+        "keywords": ["奖学金金额2000元", "平均学分绩点达到3.0以上"],
+        "quote": "优秀学生一等奖学金（同时授予三好学生称号）：奖学金金额 2000元，本学年度平均学分绩点达到3.0以上"
+      }
+    },
+    {
+      "id": "orphan-materials",
+      "type": "positive",
+      "query": "孤儿大学生申请减免需要提供哪些孤儿身份证明材料",
+      "expected_source": "knowledge_base/cleaned/14.大连大学孤儿大学生学费、住宿费减免办法.md",
+      "evidence": {
+        "keywords": ["孤儿院或孤儿学校等社会福利机构的证明原件", "《儿童福利证》"],
+        "quote": "（1）孤儿院或孤儿学校等社会福利机构的证明原件；（2）《儿童福利证》等类似的孤儿证件原件；"
+      }
+    },
+    {
+      "id": "orphan-timing",
+      "type": "positive",
+      "query": "孤儿大学生学费住宿费减免什么时候进行、怎么减免",
+      "expected_source": "knowledge_base/cleaned/14.大连大学孤儿大学生学费、住宿费减免办法.md",
+      "evidence": {
+        "keywords": ["减免工作每年秋季学期进行", "学校按学制一次性减免学费及住宿费"],
+        "quote": "减免工作每年秋季学期进行，学校按学制一次性减免学费及住宿费。"
+      }
+    },
+    {
+      "id": "appeal-deadline",
+      "type": "positive",
+      "query": "对学校的处理决定有异议应在多少日内提出申诉",
+      "expected_source": "knowledge_base/cleaned/11.大连大学学生申诉处理办法.md",
+      "evidence": {
+        "keywords": ["10日内提出", "不再受理其提出的申诉"],
+        "quote": "申诉必须在收到处理决定或者在处理决定公告之日起 10日内提出。逾期未提出的，学校学生申诉处理委员会不再受理其提出的申诉。"
+      }
+    },
+    {
+      "id": "appeal-review-period",
+      "type": "positive",
+      "query": "申诉复查结论多少日内作出",
+      "expected_source": "knowledge_base/cleaned/11.大连大学学生申诉处理办法.md",
+      "evidence": {
+        "keywords": ["15日内作出复查结论", "可延长15日"],
+        "quote": "并在接到书面申诉之日起 15日内作出复查结论并以书面形式告知申诉人。"
+      }
+    },
+    {
+      "id": "safety-candle",
+      "type": "positive",
+      "query": "学生可以在宿舍使用蜡烛吗",
+      "expected_source": "knowledge_base/cleaned/9.大连大学学生安全教育管理规定.md",
+      "evidence": {
+        "keywords": ["禁止在宿舍楼内燃烧纸屑", "禁止在宿舍内使用煤油炉、酒精灯、蜡烛"],
+        "quote": "禁止在宿舍楼内燃烧纸屑或其它杂物；禁止在宿舍内使用煤油炉、酒精灯、蜡烛等；"
+      }
+    },
+    {
+      "id": "safety-two-weeks",
+      "type": "positive",
+      "query": "未请假擅自离校连续多久按退学处理",
+      "expected_source": "knowledge_base/cleaned/9.大连大学学生安全教育管理规定.md",
+      "evidence": {
+        "keywords": ["连续两周", "按退学处理"],
+        "quote": "未请假离校连续两周未参加学校规定的教学活动的按退学处理。"
+      }
+    },
+    {
+      "id": "neg-quantum",
+      "type": "negative",
+      "query": "量子纠缠如何实现超光速通信？",
+      "note": "域外问题：知识库没有物理通信内容（真实 keyword 模式曾验证拒答）。"
+    },
+    {
+      "id": "neg-library-hours",
+      "type": "negative",
+      "query": "大连大学图书馆每天几点开放、几点闭馆？",
+      "note": "原文没有图书馆开放时间（全部 28 篇 cleaned 文档均无“图书馆”字样）。"
+    },
+    {
+      "id": "neg-campus-card",
+      "type": "negative",
+      "query": "校园卡丢了应该去哪个部门补办？",
+      "note": "原文没有校园卡补办流程。"
+    },
+    {
+      "id": "neg-postgraduate-line",
+      "type": "negative",
+      "query": "2026 年硕士研究生招生复试分数线是多少？",
+      "note": "原文没有复试分数线；仅有保留入学资格提及研究生招生考试。"
+    },
+    {
+      "id": "neg-express-station",
+      "type": "negative",
+      "query": "学校快递驿站在哪里，怎么取件？",
+      "note": "原文没有快递驿站信息。"
+    }
+  ]
+}

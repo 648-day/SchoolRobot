@@ -2,20 +2,24 @@
 
 > 项目进度入口与时间顺序日志见 [progress.md](./progress.md)；本文件只记录**实际运行过**的测试，
 > Codex 的真实 API 验收与外部冒烟证据在本文第 5 节如实引用。
-> keyword 模式真实 API 样例验收：**通过**；**真实 Chroma + BGE 全链路仍待验证**。
+> keyword 模式真实 API 样例验收：**通过**；**真实 Chroma + BGE 链路已冒烟跑通、完整评测三轮
+> 指标波动，质量验收未通过**（待 B 检查持久化 / 索引与独立评测集，见第 4、5.4 节）。
 
 ## 1. 环境与命令
 
 - Python：`backend/.venv/Scripts/python.exe`（Python 3.12）
 - 已安装（`importlib.metadata.version` 实测）：fastapi 0.141.1、**starlette 1.7.0**、
   httpx 0.28.1、pydantic 2.13.5、pytest 9.1.1、python-dotenv 1.2.3、uvicorn 0.54.0；
-  **未安装** chromadb、sentence-transformers（chroma 相关用假客户端 / 假嵌入覆盖）
+  **未安装** chromadb、sentence-transformers（chroma 相关用假客户端 / 假嵌入覆盖）；
+  真实重依赖在独立验证环境 `storage/vector_db/validation-env`（gitignored），不改变本环境
 - 命令与结果：
 
 ```powershell
 backend\.venv\Scripts\python.exe -m pytest tests/backend tests/api -q
 # C 本地运行：      117 passed, 1 warning in 4.62s
 # Codex 独立复验： 117 passed, 1 warning in 4.38s
+backend\.venv\Scripts\python.exe -m pytest tests -q
+# 含 tests/retrieval（C 的检索评测）：171 passed, 1 warning（117 + 54，2026-09-30 最新）
 ```
 
 - warning 来自 `fastapi.testclient` 对 httpx 的 Starlette 弃用提示，与本项目代码无关。
@@ -78,9 +82,12 @@ backend\.venv\Scripts\python.exe -m pytest tests/backend tests/api -q
 
 ## 4. 未覆盖 / 留给复验
 
-1. **真实 Chroma + BGE 全链路**：backend 环境未安装 `chromadb` / `sentence-transformers`，
-   未下载 BGE 模型；仅用假 embedding 在外部环境做过 adapter 冒烟（第 5.2 节）。
-2. **检索质量指标**：没有 Recall@K / MRR 评测（需要 B 的评测数据）。
+1. **真实 Chroma + BGE 全链路**：`backend/.venv` 仍未安装 `chromadb` / `sentence-transformers`；
+   真实链路已由 Codex 在独立验证环境 `storage/vector_db/validation-env` 跑通（API 冒烟见 5.4 节，
+   三轮完整评测见 5.5 节），**但现有库跨进程检索不稳定、质量验收未通过**，
+   待 B 检查完整持久化 / 索引并用独立评测集复测。
+2. **正式检索质量指标**：C 已有 20 正例 / 5 负例的小样本开发回归（keyword 完整、Chroma 三轮观察），
+   但**正式 Recall@K / MRR 需要 B 的评测数据**，当前不能出；chroma 三轮观察值波动，不作为质量结论。
 3. **keyword 分数语义**：启发式相关度，与 chroma 的 `1/(1+distance)` 不可直接比较。
 4. **20 秒前端超时实测**：未做浏览器端到端计时；后端默认 15 秒预留余量。
 5. **`docs` 早期草案接口**（`/api/chat` 前缀、知识库分类）未实现，不在本阶段范围。
@@ -111,14 +118,47 @@ backend\.venv\Scripts\python.exe -m pytest tests/backend tests/api -q
 ### 5.3 仓库与前端核验
 
 - 后端独立复验：`117 passed, 1 warning, 4.38s`（Codex，`backend/.venv/Scripts/python.exe`）。
+- 最新全量回归（2026-09-30，含检索评测）：`tests` = `171 passed, 1 warning`
+  （`backend/.venv/Scripts/python.exe -X utf8 -m pytest tests -q`）。
 - 前端：`pnpm exec vitest run` = 11 passed；`pnpm exec vue-tsc --noEmit` 退出 0。
 - 仓库：`git diff --check` 退出 0；`git diff --cached` 为空；
   `frontend/types/auto/components.d.ts` 为用户修改，未改动
   （sha1 `2b124f3924ca4659c8567b206d294f6f5c9a786e`）。
+
+### 5.4 真实 BGE + 真实向量库 API 冒烟：通过（样例级）
+
+- 环境：独立验证环境 `storage/vector_db/validation-env`（Python 3.12、`chromadb 0.4.24`、
+  `sentence-transformers 3.4.1`、`transformers 4.48.3`、`torch 2.5.1+cpu`、`numpy 1.26.4`、`posthog 3.25.0`）；
+  模型 `storage/vector_db/models/bge-large-zh-v1.5`（revision `79e7739b…0116`，
+  `pytorch_model.bin` sha256 `bf84a56f…7a207f2`）；库为 `vectorstore/chroma` 只读副本
+  （229×2 集合、1024 维）；LLM 为 Ollama `qwen3.5:4b`。
+- 结果：违纪处分种类问题 HTTP 200、8.29s，正确列出五种处分并引用 [4]
+  （`knowledge_base/cleaned/10.大连大学学生违纪管理规定.md` 第六条）；
+  域外量子问题 HTTP 200、0.15s、`sources=[]` 拒答；首次检索加载 12.20s。
+- 安全与限制：原库只复制不打开，10 个文件 hash 前后一致，临时副本已删除；
+  冒烟测试**显式 60 秒超时**，不代表默认 15 秒冷启动保证；仅 2 个样例，不代表质量达标。
+- 结构化摘要见 `docs/evaluation/chroma_api_smoke.json`。
+
+### 5.5 真实 Chroma + BGE 完整评测：三轮观察，质量验收未通过
+
+- 三轮完整 25 例（每次全新临时副本 + 独立进程，**不挑最好值**）：
+  第 1 轮 Hit 15/20、MRR 0.6625、证据 14/20、负例拒绝 2/5（原始 JSON 已被复跑覆盖，不伪造恢复）；
+  第 2 轮 Hit 17/20、MRR 0.72、证据 14/20、负例拒绝 1/5；
+  第 3 轮 Hit 18/20、MRR 0.6933、证据 13/20、负例拒绝 1/5。
+- 观察区间 Hit 75–90%、证据 65–70%、负例拒绝 20–40%；仅三次观察，**不是置信区间或质量结论**。
+- 探针证明：4 个查询的 float32 查询向量三次独立进程完全一致、同进程重复查询稳定；
+  跨副本候选 ID / 排名变化，**波动在 Chroma 层**；原库 HNSW 目录缺 `index_metadata.pickle`
+  （chromadb 0.4.24 据此判断索引存在）；重建次序是否唯一根因**尚未隔离**，不宣称已解决。
+- 结论口径：**链路可用；现有库跨进程检索不稳定，质量验收未通过；待 B 检查完整持久化 / 索引
+  与独立评测集复测**。详细记录见 [retrieval_evaluation.md](./retrieval_evaluation.md) 第 5 节，
+  探针整理见 `docs/evaluation/chroma_repeatability_probe.json`。
 
 ## 6. 历史备注（保留，不抹去）
 
 - 第 1 轮实现时的测试结果是 `92 passed, 2 failed`；两个失败已修复并纳入本轮 117 项。
 - 第一版真实 `/chat` 问答约 2.66s 但**因检索漏证据错误拒答**；修复分段与排序后，
   才有 5.1 节的 keyword/API 验收通过。
-- 详细时间顺序见 [progress.md](./progress.md) 第 7 节。
+- 检索评测工具的证据判定曾误用报告 200 字截短片段（当时得证据覆盖 19/20）；
+  2026-09-30 修复为对比检索器真实返回文本并限定 `expected_source`，keyword 重跑为 **20/20**。
+  历史记录保留并更正，**不归咎检索器 500 字窗口**。
+- 详细时间顺序见 [progress.md](./progress.md) 第 9 节。

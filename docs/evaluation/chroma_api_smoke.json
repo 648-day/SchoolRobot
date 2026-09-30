@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "kind": "chroma_real_api_smoke_summary",
+  "date": "2026-09-30",
+  "source_evidence": "系统 TEMP/schoolrobot-bge-api-smoke.json（原始证据未纳入仓库）；本文件为结构化摘要。",
+  "scope_note": "样例级冒烟，不是检索质量评测；只用来说明真实 BGE + Chroma 副本 + Ollama 链路可跑通。检索质量与稳定性结论见 docs/retrieval_evaluation.md（Chroma 评测指标跨轮波动，质量验收未通过，待 B 检查与正式评测集）。",
+  "school": "大连大学",
+  "environment": {
+    "python": "3.12",
+    "runtime": "storage/vector_db/validation-env（gitignored 独立验证环境；未改 backend/.venv 与仓库配置）",
+    "chromadb": "0.4.24",
+    "sentence-transformers": "3.4.1",
+    "transformers": "4.48.3",
+    "torch": "2.5.1+cpu",
+    "numpy": "1.26.4",
+    "posthog": "3.25.0"
+  },
+  "embedding_model": {
+    "name": "bge-large-zh-v1.5",
+    "local_path": "storage/vector_db/models/bge-large-zh-v1.5",
+    "revision": "79e7739b6ab944e86d6171e44d24c997fc1e0116",
+    "pytorch_model_bin_sha256": "bf84a56fb045c24e090495195584a3922c3e4204107f0bba8b79c11f67a207f2",
+    "note": "模型本地加载；哈希为 Codex 登记值"
+  },
+  "vector_db": {
+    "source": "vectorstore/chroma",
+    "collections": [
+      "school_documents_content",
+      "school_documents_structure"
+    ],
+    "vectors_per_collection": 229,
+    "dimension": 1024,
+    "handling": "只复制到临时副本后打开，原库只复制不打开",
+    "original_db_files_hash_unchanged": true,
+    "original_db_file_count": 10,
+    "temp_copy_deleted": true
+  },
+  "llm": {
+    "provider": "Ollama",
+    "model": "qwen3.5:4b"
+  },
+  "http_timeout_seconds_used_in_test": 60,
+  "timeout_note": "冒烟测试显式设置 60 秒超时；不代表默认 15 秒冷启动保证，也不改变后端配置。",
+  "first_retrieval_load_seconds": 12.2,
+  "cases": [
+    {
+      "query": "学生违纪处分有哪些种类？",
+      "http_status": 200,
+      "seconds": 8.29,
+      "retrieval_mode": "chroma",
+      "answer_summary": "回答五种纪律处分（警告、严重警告、记过、留校察看、开除学籍）并引用 [4]。",
+      "citation": "[4]",
+      "cited_source_index": 4,
+      "cited_source": "knowledge_base/cleaned/10.大连大学学生违纪管理规定.md",
+      "sources_count": 5,
+      "notes": "引用 [4] 对应 sources 第 4 条（index=4），内容为第六条五种处分类型。"
+    },
+    {
+      "query": "量子纠缠如何实现超光速通信？",
+      "http_status": 200,
+      "seconds": 0.15,
+      "retrieval_mode": "chroma",
+      "refused": true,
+      "answer": "参考资料未提及，请咨询学校相关部门。",
+      "sources_count": 0,
+      "notes": "域外问题零命中拒答、不调用模型。"
+    }
+  ],
+  "limits": [
+    "仅 2 个样例，不能代表真实查询分布；不能据此宣称检索质量达标。",
+    "同一真实向量库的完整 25 例评测跨进程结果波动（见 docs/retrieval_evaluation.md、docs/evaluation/chroma_repeatability_probe.json），本冒烟不构成稳定复现证据。",
+    "首次检索加载 12.20 秒为本次观察值，受机器负载影响，不是承诺值。"
+  ]
+}

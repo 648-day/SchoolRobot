@@ -74,7 +74,9 @@ $env:EMBEDDING_DEVICE = "cpu"
 `sentence-transformers>=3.0.1,<4`（选用 3.0.1+ 的 3.x：已核查 v3.0.1 支持
 `SentenceTransformer(..., local_files_only=True)`，更早版本未核查、不作为下限依据）。
 该清单与 B 的构建环境对齐（`scripts/requirements.txt` 为 `chromadb>=0.4.22,<0.5.0`）。
-注意：**不要安装 / 下载重依赖用于常规测试**，本环境尚未安装，BGE 端到端也尚未验证。
+注意：**不要安装 / 下载重依赖用于常规测试**，`backend/.venv` 仍未安装；
+真实 BGE + 真实向量库已由 Codex 在独立验证环境 `storage/vector_db/validation-env` 跑通并评测
+（三轮指标波动、质量验收未通过，见 [retrieval_evaluation.md](./retrieval_evaluation.md)）。
 
 注意：
 
@@ -86,7 +88,8 @@ $env:EMBEDDING_DEVICE = "cpu"
   `storage/vector_db/chroma`；两者不会自动互相迁移，需要时用 `VECTOR_DB_PATH` 显式指定。
 - 首次请求会加载嵌入模型，可能超过前端 20 秒；建议先单独调用一次预热。
 - chroma 适配器曾用真实 `chromadb==0.4.24` + 临时数据库 + 假 embedding 做过外部冒烟验证
-  （详见测试报告），但**真实 BGE 模型 + 真实向量库的端到端尚未验证**。
+  （详见测试报告）；真实 BGE 模型 + 真实向量库的端到端已由 Codex 在独立验证环境完成冒烟与
+  三轮评测，**质量验收未通过**（跨进程检索不稳定，待 B 检查持久化 / 索引与正式评测集）。
 
 ## 4. 测试
 

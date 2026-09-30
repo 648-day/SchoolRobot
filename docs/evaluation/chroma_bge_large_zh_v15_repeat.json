@@ -1,0 +1,1633 @@
+{
+  "schema_version": 1,
+  "kind": "retrieval_dev_regression_small_sample",
+  "generated_at": "2026-09-30T18:42:39",
+  "mode": "chroma",
+  "top_k": 5,
+  "dataset": {
+    "name": "C 检索开发回归小样本（非正式评测集）",
+    "description": "学生 C 维护的小规模开发回归集：正例证据均取自 knowledge_base/cleaned 原文并由测试逐条核对；只用于本地开发回归与 Chroma 真实库的准备性验证。样本量小、覆盖面有限，不能泛化，不构成 B 的正式评测集或独立测试集，也不要据此宣称完整 Recall@K。负例为原文没有的具体信息或域外问题。",
+    "path": "tests/fixtures/retrieval_cases.json",
+    "sha256": "96da220bb5cf83a5c242ac2e2af1efc420e42937f1e095febc4e83aaa0097b5d",
+    "positive_total": 20,
+    "negative_total": 5
+  },
+  "library": {
+    "vector_db": "vectorstore/chroma",
+    "opened_from": "temporary-copy",
+    "worker": "subprocess",
+    "content_collection": "school_documents_content",
+    "structure_collection": "school_documents_structure",
+    "embedding_model": "bge-large-zh-v1.5",
+    "device": "cpu",
+    "min_score": 0.35
+  },
+  "summary": {
+    "top_k": 5,
+    "case_total": 25,
+    "positive_total": 20,
+    "negative_total": 5,
+    "error_total": 0,
+    "document_hit_at_k": {
+      "hits": 18,
+      "total": 20,
+      "value": 0.9
+    },
+    "mrr": {
+      "reciprocal_rank_sum": 13.8667,
+      "total": 20,
+      "value": 0.6933
+    },
+    "evidence_coverage": {
+      "covered": 13,
+      "total": 20,
+      "value": 0.65
+    },
+    "negative_rejection": {
+      "rejected": 1,
+      "total": 5,
+      "value": 0.2
+    },
+    "definitions": {
+      "document_hit_at_k": "正例中目标文档出现在 top-k 返回来源内的比例。只判文档级命中；重复来源按首次出现的名次计、只计一次。分母=全部正例（含出错正例，出错记未命中）。不是完整 Recall@K，不度量片段级召回。",
+      "mrr": "正例首次命中目标文档名次倒数的平均值（1/rank）。未命中或出错记 0。分母=全部正例。",
+      "evidence_coverage": "正例中存在至少一条**来源匹配 expected_source** 的 top-k 结果，其**检索器返回的完整文本**（受检索器 SNIPPET_MAX_CHARS 限制，默认 500 字符；不是报告展示用的200 字符裁剪片段）同时包含全部证据关键词（忽略空白差异）的比例。报告记录匹配位置（相对检索文本的字符区间）与报告片段是否被截断。分母=全部正例（含出错正例）。其他文档即使含相同关键词也不计。",
+      "negative_rejection": "负例检索结果为空（零命中）的比例。分母=全部负例；检索出错不计为拒答成功。"
+    }
+  },
+  "cases": [
+    {
+      "id": "choose-course-years",
+      "type": "positive",
+      "query": "本科生弹性学习年限是多少年",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 13071.42,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/6.大连大学本科学生学籍管理规定.md",
+          "score": 0.5417,
+          "chunk_id": "6.大连大学本科学生学籍管理规定.md_4",
+          "text_length": 500,
+          "snippet": "# 第四章 选课 课程考核 成绩记载\n\n第十五条 学生每学期应选修15—35学分的课程，方可在规定年限内毕业。在校学习期间未获得的学分累计大于等于30学分（包括本专业培养方案规定目前应修但未修的课程学分）者，应在新学期首先选择重修不及格课程和补修应修但未修的课程，在上课时间不冲突和学习任务不饱满的情况下可以适当选修部分新课，但是选课总学分数原则上不能大于35学分；毕业班的学生未获得学分累计大于等…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/5.大连大学学生管理规定.md",
+          "score": 0.4097,
+          "chunk_id": "5.大连大学学生管理规定.md_4",
+          "text_length": 304,
+          "snippet": "# 第二节 学制与学习年限\n\n第十三条硕士研究生的基本学制为二年或三年（根据不同专业而定），以此制定培养方案，不论学生修满培养计划规定学分的年限，毕业时学制均以基本学制计。\n\n本科生基本学制为四年或者五年（根据不同专业而定），以此制定培养方案，不论学生修满培养计划规定学分的年限，毕业时学制均以基本学制计。\n\n第十四条 硕士研究生弹性学习年限为二年制研究生为二至四年，三年制研究生为二至五年。本科生…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/20.大连大学本科生选课管理办法.md",
+          "score": 0.379,
+          "chunk_id": "20.大连大学本科生选课管理办法.md_0",
+          "text_length": 500,
+          "snippet": "（2015 年制定，2023 年修订）\n\n科学完善的选课制度是强化责任意识、保证学习质量的重要措施。为进一步规范学生学业管理，特制定本办法。\n\n# 一、管理总则\n\n1.本科生弹性学习年限为四年制本科为 3 至 6 年，五年制本科为 4 至 7 年。学生可根据专业培养方案，通过选课自主安排个人学习进程；每学期应选修 15—35 学分课程并获得学分，方可在规定年限内毕业。\n2.除特殊说明外，所有课程…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/20.大连大学本科生选课管理办法.md",
+      "expected_evidence_keywords": [
+        "四年制本科为3至6年",
+        "五年制本科为4至7年"
+      ],
+      "expected_evidence_quote": "本科生弹性学习年限为四年制本科为 3 至 6 年，五年制本科为 4 至 7 年。",
+      "hit": true,
+      "rank": 3,
+      "evidence_hit": true,
+      "evidence_rank": 3,
+      "evidence_matches": [
+        {
+          "keyword": "四年制本科为3至6年",
+          "start": 94,
+          "end": 108
+        },
+        {
+          "keyword": "五年制本科为4至7年",
+          "start": 109,
+          "end": 123
+        }
+      ],
+      "evidence_report_snippet_truncated": true
+    },
+    {
+      "id": "choose-course-credits",
+      "type": "positive",
+      "query": "每学期选修多少学分才能在规定年限内毕业",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 163.98,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/20.大连大学本科生选课管理办法.md",
+          "score": 0.6278,
+          "chunk_id": "20.大连大学本科生选课管理办法.md_0",
+          "text_length": 500,
+          "snippet": "（2015 年制定，2023 年修订）\n\n科学完善的选课制度是强化责任意识、保证学习质量的重要措施。为进一步规范学生学业管理，特制定本办法。\n\n# 一、管理总则\n\n1.本科生弹性学习年限为四年制本科为 3 至 6 年，五年制本科为 4 至 7 年。学生可根据专业培养方案，通过选课自主安排个人学习进程；每学期应选修 15—35 学分课程并获得学分，方可在规定年限内毕业。\n2.除特殊说明外，所有课程…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/20.大连大学本科生选课管理办法.md",
+          "score": 0.5894,
+          "chunk_id": "20.大连大学本科生选课管理办法.md_1",
+          "text_length": 500,
+          "snippet": "# 二、选课细则\n\n1.学生应对本学期所学课程的授课教师进行评教后方能选取下学期的课程。\n2.选课前学生应了解本专业培养方案、课程设置与指导性教学进程，并认真查阅班级推荐课表。\n3.每学期全校开设的课程通过教务管理系统予以公布，学生应主动查询教务处相关通知，及时了解课程变动情况及选课相关信息。\n4.原则上上课时间冲突的课程只能选修其中 1 门。在校期间学习成绩平均学分绩点 2.5 以上者，如果所…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/6.大连大学本科学生学籍管理规定.md",
+          "score": 0.3708,
+          "chunk_id": "6.大连大学本科学生学籍管理规定.md_4",
+          "text_length": 500,
+          "snippet": "# 第四章 选课 课程考核 成绩记载\n\n第十五条 学生每学期应选修15—35学分的课程，方可在规定年限内毕业。在校学习期间未获得的学分累计大于等于30学分（包括本专业培养方案规定目前应修但未修的课程学分）者，应在新学期首先选择重修不及格课程和补修应修但未修的课程，在上课时间不冲突和学习任务不饱满的情况下可以适当选修部分新课，但是选课总学分数原则上不能大于35学分；毕业班的学生未获得学分累计大于等…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/6.大连大学本科学生学籍管理规定.md",
+          "score": 0.3585,
+          "chunk_id": "6.大连大学本科学生学籍管理规定.md_5",
+          "text_length": 477,
+          "snippet": "，一式3份送交至教务处审批备案，审批备案通过后，学分予以承认。\n\n第十七条 考核分为考试和考查两种。考试课成绩按百分制评定，60分为及格；考查课成绩按五级制评定（A、B、C、D、F），F为不及格。\n\n第十八条总学分的要求及学分计算：\n\n学分是衡量学生学习量的单位，总学分是以中等程度学生在基本学制内可完成的课程总量为基准制定。\n\n学分计算的具体方法\n\n（一）理论课原则上以一学期的平均周学时数记为该…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/5.大连大学学生管理规定.md",
+          "score": 0.3582,
+          "chunk_id": "5.大连大学学生管理规定.md_4",
+          "text_length": 304,
+          "snippet": "# 第二节 学制与学习年限\n\n第十三条硕士研究生的基本学制为二年或三年（根据不同专业而定），以此制定培养方案，不论学生修满培养计划规定学分的年限，毕业时学制均以基本学制计。\n\n本科生基本学制为四年或者五年（根据不同专业而定），以此制定培养方案，不论学生修满培养计划规定学分的年限，毕业时学制均以基本学制计。\n\n第十四条 硕士研究生弹性学习年限为二年制研究生为二至四年，三年制研究生为二至五年。本科生…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/20.大连大学本科生选课管理办法.md",
+      "expected_evidence_keywords": [
+        "每学期应选修15—35学分课程",
+        "方可在规定年限内毕业"
+      ],
+      "expected_evidence_quote": "每学期应选修 15—35 学分课程并获得学分，方可在规定年限内毕业。",
+      "hit": true,
+      "rank": 1,
+      "evidence_hit": true,
+      "evidence_rank": 1,
+      "evidence_matches": [
+        {
+          "keyword": "每学期应选修15—35学分课程",
+          "start": 151,
+          "end": 168
+        },
+        {
+          "keyword": "方可在规定年限内毕业",
+          "start": 174,
+          "end": 184
+        }
+      ],
+      "evidence_report_snippet_truncated": true
+    },
+    {
+      "id": "choose-course-drop",
+      "type": "positive",
+      "query": "选课后没有办理退选手续又不参加课程考核会怎么处理",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 180.07,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/20.大连大学本科生选课管理办法.md",
+          "score": 0.5608,
+          "chunk_id": "20.大连大学本科生选课管理办法.md_0",
+          "text_length": 500,
+          "snippet": "（2015 年制定，2023 年修订）\n\n科学完善的选课制度是强化责任意识、保证学习质量的重要措施。为进一步规范学生学业管理，特制定本办法。\n\n# 一、管理总则\n\n1.本科生弹性学习年限为四年制本科为 3 至 6 年，五年制本科为 4 至 7 年。学生可根据专业培养方案，通过选课自主安排个人学习进程；每学期应选修 15—35 学分课程并获得学分，方可在规定年限内毕业。\n2.除特殊说明外，所有课程…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/20.大连大学本科生选课管理办法.md",
+          "score": 0.547,
+          "chunk_id": "20.大连大学本科生选课管理办法.md_1",
+          "text_length": 500,
+          "snippet": "# 二、选课细则\n\n1.学生应对本学期所学课程的授课教师进行评教后方能选取下学期的课程。\n2.选课前学生应了解本专业培养方案、课程设置与指导性教学进程，并认真查阅班级推荐课表。\n3.每学期全校开设的课程通过教务管理系统予以公布，学生应主动查询教务处相关通知，及时了解课程变动情况及选课相关信息。\n4.原则上上课时间冲突的课程只能选修其中 1 门。在校期间学习成绩平均学分绩点 2.5 以上者，如果所…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/20.大连大学本科生选课管理办法.md",
+      "expected_evidence_keywords": [
+        "该课程成绩记为零分或不通过",
+        "不能取得相应的学分"
+      ],
+      "expected_evidence_quote": "该课程成绩记为零分或不通过，不能取得相应的学分。",
+      "hit": true,
+      "rank": 1,
+      "evidence_hit": false,
+      "evidence_rank": null,
+      "evidence_matches": []
+    },
+    {
+      "id": "exam-room-late",
+      "type": "positive",
+      "query": "考试迟到多久不得参加考试",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 112.15,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/22.大连大学考场规则.md",
+          "score": 0.3672,
+          "chunk_id": "22.大连大学考场规则.md_0",
+          "text_length": 500,
+          "snippet": "（1998 年制定，2018 年修订）\n\n一、考生应在考试前 10 分钟持考试证件进入考场，服从监考人员的安排，按照指定座位就坐；将考试相关证件放在桌面，无考试证者不准参加考试。迟到 20分钟（含 20 分钟）以上者，不得参加考试，按旷考处理。考试开始 30 分钟（含 30分钟）以后，才准予交卷出场。\n二、除必要的文具和开卷考试科目所允许的相关资料外，其他书籍、笔记、纸张等不得带入考场座位。考生…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+          "score": 0.362,
+          "chunk_id": "23.大连大学考试违规处理办法.md_1",
+          "text_length": 500,
+          "snippet": "# 第二章 违规行为的认定与处理\n\n第五条 考生不遵守考场纪律，不服从考试工作人员的安排与要求，有下列行为之一者，要当场给予口头警告并予以纠正：\n\n（一）考试前未按考场座位图规定就座，或未按监考教师指定位置就座。\n（二）考试前自带答题纸或草稿纸（空白）。\n（三）未经允许携带计算器进入考场。\n（四）开卷考试中借用他人资料。\n（五）交卷后仍在考场逗留或在考场附近高声喧哗。\n\n第六条 有下列情况之一者…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/10.大连大学学生违纪管理规定.md",
+          "score": 0.3519,
+          "chunk_id": "10.大连大学学生违纪管理规定.md_11",
+          "text_length": 384,
+          "snippet": "留校察看处分；\n\n（五）未经批准离校连续两周未参加学校规定的教学活动的视为放弃学籍，按自动退学处理。\n\n第二十六条 违反考试纪律的，视其情节给予下列处分：\n\n（一）考场违纪者，视情节给予警告或严重警告处分；\n（二）考场作弊者，视情节给予留校察看以上处分。代替他人或者让他人代替自己参加考试、组织作弊、使用通讯设备或其他器材作弊、向他人出售考试试题或答案牟取利益，以及其他严重作弊或扰乱考试秩序行为的…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+          "score": 0.3501,
+          "chunk_id": "23.大连大学考试违规处理办法.md_0",
+          "text_length": 357,
+          "snippet": "（1998 年制定，2023 年修订）\n\n# 第一章 总 则\n\n第一条 为维护考试的公平、公正，保障参加考试考生、从事和参与考试工作的人员的合法权益，规范对考试违规行为的认定与处理，根据《中华人民共和国教育法》《国家教育考试违规处理办法》和学校有关规定，制定本办法。\n\n第二条 本办法所称考试是指上级教育主管部门、学校、各教学单位组织的各级各类考试。\n\n第三条 本办法所称考场是指实施考试的封闭空间…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/22.大连大学考场规则.md",
+      "expected_evidence_keywords": [
+        "迟到20分钟",
+        "按旷考处理"
+      ],
+      "expected_evidence_quote": "迟到 20分钟（含 20 分钟）以上者，不得参加考试，按旷考处理。",
+      "hit": true,
+      "rank": 1,
+      "evidence_hit": true,
+      "evidence_rank": 1,
+      "evidence_matches": [
+        {
+          "keyword": "迟到20分钟",
+          "start": 89,
+          "end": 96
+        },
+        {
+          "keyword": "按旷考处理",
+          "start": 116,
+          "end": 121
+        }
+      ],
+      "evidence_report_snippet_truncated": true
+    },
+    {
+      "id": "exam-room-leave",
+      "type": "positive",
+      "query": "考试开始多少分钟以后才准予交卷出场",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 136.09,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/12.大连大学学生综合素质测评办法.md",
+          "score": 0.5099,
+          "chunk_id": "12.大连大学学生综合素质测评办法.md_1",
+          "text_length": 500,
+          "snippet": "# 第二章 测评办法\n\n第四条 学生综合素质测评包括思想道德素质、专业素质、身心素质、文化素质和能力水平等方面，见附表。\n\n思想道德素质测评成绩占 $2 5 \\%$ ，专业素质测评成绩占 $45 \\%$ ,身心素质、文化素质和能力水平的测试成绩各占 $1 0 \\%$ 。\n\n学生综合素质测评成绩 $=$ 思想道德素质测评成绩 $\\times 2 5 \\% +$ 专业素质测评成绩 $\\times 4…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/22.大连大学考场规则.md",
+          "score": 0.376,
+          "chunk_id": "22.大连大学考场规则.md_0",
+          "text_length": 500,
+          "snippet": "（1998 年制定，2018 年修订）\n\n一、考生应在考试前 10 分钟持考试证件进入考场，服从监考人员的安排，按照指定座位就坐；将考试相关证件放在桌面，无考试证者不准参加考试。迟到 20分钟（含 20 分钟）以上者，不得参加考试，按旷考处理。考试开始 30 分钟（含 30分钟）以后，才准予交卷出场。\n二、除必要的文具和开卷考试科目所允许的相关资料外，其他书籍、笔记、纸张等不得带入考场座位。考生…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/22.大连大学考场规则.md",
+      "expected_evidence_keywords": [
+        "考试开始30分钟",
+        "才准予交卷出场"
+      ],
+      "expected_evidence_quote": "考试开始 30 分钟（含 30分钟）以后，才准予交卷出场。",
+      "hit": true,
+      "rank": 2,
+      "evidence_hit": true,
+      "evidence_rank": 2,
+      "evidence_matches": [
+        {
+          "keyword": "考试开始30分钟",
+          "start": 122,
+          "end": 132
+        },
+        {
+          "keyword": "才准予交卷出场",
+          "start": 143,
+          "end": 150
+        }
+      ],
+      "evidence_report_snippet_truncated": true
+    },
+    {
+      "id": "exam-cheat-punish",
+      "type": "positive",
+      "query": "考试作弊会给予什么处分",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 120.35,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+          "score": 0.5837,
+          "chunk_id": "23.大连大学考试违规处理办法.md_2",
+          "text_length": 456,
+          "snippet": "六）在身体、衣物等处写有与本次考试有关的内容。\n（七）携带与考试内容相关的文字材料或者电子存储设备。\n（八）传、接与考试相关的物品或者交换试卷、答卷、草稿纸。\n（九）其他作弊行为。\n\n第八条 在考试前后或在考试过程中发现下列行为之一的，应当认定相关的考生实施了考试作弊行为。本次考试成绩无效，取消二考资格，视情节轻重给予留校察看或开除学籍处分。\n\n（一）在答卷上填写当场考试其他考生姓名、考号等信息…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+          "score": 0.5688,
+          "chunk_id": "23.大连大学考试违规处理办法.md_1",
+          "text_length": 500,
+          "snippet": "# 第二章 违规行为的认定与处理\n\n第五条 考生不遵守考场纪律，不服从考试工作人员的安排与要求，有下列行为之一者，要当场给予口头警告并予以纠正：\n\n（一）考试前未按考场座位图规定就座，或未按监考教师指定位置就座。\n（二）考试前自带答题纸或草稿纸（空白）。\n（三）未经允许携带计算器进入考场。\n（四）开卷考试中借用他人资料。\n（五）交卷后仍在考场逗留或在考场附近高声喧哗。\n\n第六条 有下列情况之一者…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+          "score": 0.5683,
+          "chunk_id": "23.大连大学考试违规处理办法.md_0",
+          "text_length": 357,
+          "snippet": "（1998 年制定，2023 年修订）\n\n# 第一章 总 则\n\n第一条 为维护考试的公平、公正，保障参加考试考生、从事和参与考试工作的人员的合法权益，规范对考试违规行为的认定与处理，根据《中华人民共和国教育法》《国家教育考试违规处理办法》和学校有关规定，制定本办法。\n\n第二条 本办法所称考试是指上级教育主管部门、学校、各教学单位组织的各级各类考试。\n\n第三条 本办法所称考场是指实施考试的封闭空间…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+          "score": 0.5647,
+          "chunk_id": "23.大连大学考试违规处理办法.md_3",
+          "text_length": 500,
+          "snippet": "# 第三章 违规行为认定与处理的程序\n\n第十条 在考试过程中发现本办法第六条、第七条，及第八条（一）（二）款所列行为者，监考人员应当及时予以纠正并将当事人姓名、学号、违纪作弊主要情节在《考场记事》和《考试违规情况说明表》中如实填写，特殊情况需形成书面材\n\n料。《考试违规情况说明表》中考生违规记录作为认定考生违规事实的依据，应当由两名以上（含两名）监考员或者考场巡视员签字确认，并在试卷上标注“违规…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/10.大连大学学生违纪管理规定.md",
+          "score": 0.3608,
+          "chunk_id": "10.大连大学学生违纪管理规定.md_11",
+          "text_length": 384,
+          "snippet": "留校察看处分；\n\n（五）未经批准离校连续两周未参加学校规定的教学活动的视为放弃学籍，按自动退学处理。\n\n第二十六条 违反考试纪律的，视其情节给予下列处分：\n\n（一）考场违纪者，视情节给予警告或严重警告处分；\n（二）考场作弊者，视情节给予留校察看以上处分。代替他人或者让他人代替自己参加考试、组织作弊、使用通讯设备或其他器材作弊、向他人出售考试试题或答案牟取利益，以及其他严重作弊或扰乱考试秩序行为的…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+      "expected_evidence_keywords": [
+        "本次考试成绩无效取消二考资格",
+        "留校察看或开除学籍处分"
+      ],
+      "expected_evidence_quote": "本次考试成绩无效取消二考资格，视情节轻重给予留校察看或开除学籍处分。",
+      "hit": true,
+      "rank": 1,
+      "evidence_hit": false,
+      "evidence_rank": null,
+      "evidence_matches": []
+    },
+    {
+      "id": "exam-discipline-punish",
+      "type": "positive",
+      "query": "考试违纪会受到什么处理",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 125.39,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/10.大连大学学生违纪管理规定.md",
+          "score": 0.384,
+          "chunk_id": "10.大连大学学生违纪管理规定.md_11",
+          "text_length": 384,
+          "snippet": "留校察看处分；\n\n（五）未经批准离校连续两周未参加学校规定的教学活动的视为放弃学籍，按自动退学处理。\n\n第二十六条 违反考试纪律的，视其情节给予下列处分：\n\n（一）考场违纪者，视情节给予警告或严重警告处分；\n（二）考场作弊者，视情节给予留校察看以上处分。代替他人或者让他人代替自己参加考试、组织作弊、使用通讯设备或其他器材作弊、向他人出售考试试题或答案牟取利益，以及其他严重作弊或扰乱考试秩序行为的…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+          "score": 0.3812,
+          "chunk_id": "23.大连大学考试违规处理办法.md_0",
+          "text_length": 357,
+          "snippet": "（1998 年制定，2023 年修订）\n\n# 第一章 总 则\n\n第一条 为维护考试的公平、公正，保障参加考试考生、从事和参与考试工作的人员的合法权益，规范对考试违规行为的认定与处理，根据《中华人民共和国教育法》《国家教育考试违规处理办法》和学校有关规定，制定本办法。\n\n第二条 本办法所称考试是指上级教育主管部门、学校、各教学单位组织的各级各类考试。\n\n第三条 本办法所称考场是指实施考试的封闭空间…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+          "score": 0.3774,
+          "chunk_id": "23.大连大学考试违规处理办法.md_3",
+          "text_length": 500,
+          "snippet": "# 第三章 违规行为认定与处理的程序\n\n第十条 在考试过程中发现本办法第六条、第七条，及第八条（一）（二）款所列行为者，监考人员应当及时予以纠正并将当事人姓名、学号、违纪作弊主要情节在《考场记事》和《考试违规情况说明表》中如实填写，特殊情况需形成书面材\n\n料。《考试违规情况说明表》中考生违规记录作为认定考生违规事实的依据，应当由两名以上（含两名）监考员或者考场巡视员签字确认，并在试卷上标注“违规…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+          "score": 0.3758,
+          "chunk_id": "23.大连大学考试违规处理办法.md_1",
+          "text_length": 500,
+          "snippet": "# 第二章 违规行为的认定与处理\n\n第五条 考生不遵守考场纪律，不服从考试工作人员的安排与要求，有下列行为之一者，要当场给予口头警告并予以纠正：\n\n（一）考试前未按考场座位图规定就座，或未按监考教师指定位置就座。\n（二）考试前自带答题纸或草稿纸（空白）。\n（三）未经允许携带计算器进入考场。\n（四）开卷考试中借用他人资料。\n（五）交卷后仍在考场逗留或在考场附近高声喧哗。\n\n第六条 有下列情况之一者…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+          "score": 0.3725,
+          "chunk_id": "23.大连大学考试违规处理办法.md_2",
+          "text_length": 456,
+          "snippet": "六）在身体、衣物等处写有与本次考试有关的内容。\n（七）携带与考试内容相关的文字材料或者电子存储设备。\n（八）传、接与考试相关的物品或者交换试卷、答卷、草稿纸。\n（九）其他作弊行为。\n\n第八条 在考试前后或在考试过程中发现下列行为之一的，应当认定相关的考生实施了考试作弊行为。本次考试成绩无效，取消二考资格，视情节轻重给予留校察看或开除学籍处分。\n\n（一）在答卷上填写当场考试其他考生姓名、考号等信息…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+      "expected_evidence_keywords": [
+        "取消二考资格",
+        "警告或严重警告处分"
+      ],
+      "expected_evidence_quote": "本次考试成绩无效，取消二考资格，并视情节轻重给予警告或严重警告处分。",
+      "hit": true,
+      "rank": 2,
+      "evidence_hit": true,
+      "evidence_rank": 4,
+      "evidence_matches": [
+        {
+          "keyword": "取消二考资格",
+          "start": 218,
+          "end": 224
+        },
+        {
+          "keyword": "警告或严重警告处分",
+          "start": 233,
+          "end": 242
+        }
+      ],
+      "evidence_report_snippet_truncated": true
+    },
+    {
+      "id": "dorm-hair-dryer",
+      "type": "positive",
+      "query": "宿舍里可以使用电吹风吗",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 113.37,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/28.大连大学学生寝室安全、纪律、卫生检查标准.md",
+          "score": 0.4844,
+          "chunk_id": "28.大连大学学生寝室安全、纪律、卫生检查标准.md_0",
+          "text_length": 273,
+          "snippet": "为营造安全、健康、温馨、舒适的住宿环境，培养大学生安全防范意识和良好的卫生习惯，规范大学生住宿行为，根据《大连大学学生管理规定》和《大连大学学生宿舍管理规定》制定本标准。\n\n# 一、安全检查标准\n\n1.严禁使用明火，严禁存放易燃易爆危险品、有毒有害物品及管制刀具（如：鞭炮、酒精、蜡烛、刀具等）。\n2.严禁使用或存放发热类、大功率电器（如：电热锅、电吹风、电热棒、电褥子等）。\n3.严禁私扯乱拉或改…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/27.大连大学学生宿舍管理规定.md",
+          "score": 0.4841,
+          "chunk_id": "27.大连大学学生宿舍管理规定.md_3",
+          "text_length": 500,
+          "snippet": "做好原始记录，对宿舍设施使用不当或人为损坏需承担维修费用；若责任不确定，应由本寝室全体成员共同承担。\n\n第十六条 学生宿舍实行周查寝制。学生宿舍管理中心根据《大连大学学生寝室安全、纪律卫生检查标准》进行检查，检查结果转报所属学院（学部）并在校园网学生宿舍管理中心网页通报，作为《劳动教育》课、学生入党、评优等考核指标。\n\n第十七条 学生应自觉养成良好的生活习惯，做好寝室内务整理、通风和室内清洁等工…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/28.大连大学学生寝室安全、纪律、卫生检查标准.md",
+          "score": 0.4807,
+          "chunk_id": "28.大连大学学生寝室安全、纪律、卫生检查标准.md_2",
+          "text_length": 249,
+          "snippet": "# 三、卫生检查标准\n\n1.个人物品摆放整齐有序，无乱扔、乱放、乱挂现象。\n2.坚持开窗通风换气，保持寝室内空气清新无异味。\n3.床铺整洁，被褥叠放整齐，床体无移位、拆卸等现象。\n4.桌、椅、门、柜面干净整洁，无粘贴字画或广告等。\n5.棚面、墙面无灰网。\n6.门窗玻璃无遮挡，窗台干净整洁。\n7.地面整洁见本色，无垃圾、杂物等，及时倾倒垃圾。\n8.卫生间器具整洁，无异味。\n9.阳台干净整洁，无杂物…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/3.高等学校校园秩序管理若干规定.md",
+          "score": 0.4685,
+          "chunk_id": "3.高等学校校园秩序管理若干规定.md_2",
+          "text_length": 500,
+          "snippet": "劝其停止设置、安装或者停止活动，已经设置、安装的，学校有关机构可以拆除，或者责令设置者、安装者拆除。\n\n第十二条　在校内从事集会、讲演等公共活动，组织者必须在七十二小时前向学校有关机构提出申请，申请中应当说明活动的目的、人数、时间、地点和负责人的姓名，学校有关机构应当至迟在举行时间的四小时前将许可或者不许可的决定通知组织者，逾期未通知的，视为许可。\n\n集会、讲演等应符合我国的教育方针和相应的法规…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/27.大连大学学生宿舍管理规定.md",
+          "score": 0.4678,
+          "chunk_id": "27.大连大学学生宿舍管理规定.md_2",
+          "text_length": 500,
+          "snippet": "# 第三章 细 则\n\n第七条 入住。新生入住宿舍,需持学校录取证明，本人身份证原件，一张一寸近期免冠照片，到所分配住宿宿舍楼门卫室办理住宿手续并如实填写住宿卡。因复学、延期毕业重修、实习、见习等原因需返校住宿，由学生本人向所属学院（学部）提出申请，学生宿舍管理中心审核同意，到学校财务处缴纳住宿费后方可入住。\n\n第八条 调寝。学生个人因特殊情况需要调整住宿寝室，需由本人提出书面申请，经学院同意报送…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/27.大连大学学生宿舍管理规定.md",
+      "expected_evidence_keywords": [
+        "禁止使用或存放发热类大功率电器",
+        "电吹风"
+      ],
+      "expected_evidence_quote": "禁止使用或存放发热类大功率电器，如：电炉、热得快、电褥子、电吹风、电饭锅等电器；",
+      "hit": true,
+      "rank": 2,
+      "evidence_hit": false,
+      "evidence_rank": null,
+      "evidence_matches": []
+    },
+    {
+      "id": "dorm-visitor",
+      "type": "positive",
+      "query": "宿舍来访客人最晚什么时候离开",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 124.61,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/3.高等学校校园秩序管理若干规定.md",
+          "score": 0.526,
+          "chunk_id": "3.高等学校校园秩序管理若干规定.md_1",
+          "text_length": 500,
+          "snippet": "进入学校。接受师生员工个人邀请进入学校探亲访友的外国人、港澳台人员，应当履行门卫登记手续后进入学校。\n\n第八条　依照本规定第五条、第六条、第七条的规定进入学校的人员，应当遵守法律、法规、规章和学校的制度，不得从事与其身份不符的活动，不得危害校园治安。\n\n对违反本规定第五条、第六条、第七条和本条前款规定的人员，师生员工有权向学校保卫机构报告，学校保卫机构可以要求其说明情况或者责令其离开学校。\n\n第…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/27.大连大学学生宿舍管理规定.md",
+          "score": 0.5165,
+          "chunk_id": "27.大连大学学生宿舍管理规定.md_2",
+          "text_length": 500,
+          "snippet": "# 第三章 细 则\n\n第七条 入住。新生入住宿舍,需持学校录取证明，本人身份证原件，一张一寸近期免冠照片，到所分配住宿宿舍楼门卫室办理住宿手续并如实填写住宿卡。因复学、延期毕业重修、实习、见习等原因需返校住宿，由学生本人向所属学院（学部）提出申请，学生宿舍管理中心审核同意，到学校财务处缴纳住宿费后方可入住。\n\n第八条 调寝。学生个人因特殊情况需要调整住宿寝室，需由本人提出书面申请，经学院同意报送…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/27.大连大学学生宿舍管理规定.md",
+          "score": 0.5152,
+          "chunk_id": "27.大连大学学生宿舍管理规定.md_3",
+          "text_length": 500,
+          "snippet": "做好原始记录，对宿舍设施使用不当或人为损坏需承担维修费用；若责任不确定，应由本寝室全体成员共同承担。\n\n第十六条 学生宿舍实行周查寝制。学生宿舍管理中心根据《大连大学学生寝室安全、纪律卫生检查标准》进行检查，检查结果转报所属学院（学部）并在校园网学生宿舍管理中心网页通报，作为《劳动教育》课、学生入党、评优等考核指标。\n\n第十七条 学生应自觉养成良好的生活习惯，做好寝室内务整理、通风和室内清洁等工…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/27.大连大学学生宿舍管理规定.md",
+          "score": 0.504,
+          "chunk_id": "27.大连大学学生宿舍管理规定.md_1",
+          "text_length": 261,
+          "snippet": "# 第二章 学生的权利和义务\n\n第五条 学生在校住宿期间享有下列权利:\n\n（一）使用寝室内的一个床位及相应的配套设施；\n（二）对于正常使用过程中的住宿设施的损毁有权提出维修要求；\n（三）有权参与宿舍管理工作；\n（四）对宿舍管理的相关事宜有知情权。\n\n第六条 学生在校住宿期间依法依规履行下列义务：\n\n（一）遵守国家宪法、法律、法规；\n（二）遵守学校各项规章制度；\n（三）按规定缴纳住宿费及有关费用；…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/27.大连大学学生宿舍管理规定.md",
+          "score": 0.5037,
+          "chunk_id": "27.大连大学学生宿舍管理规定.md_0",
+          "text_length": 359,
+          "snippet": "（校发[2021]118 号）\n\n# 第一章 总 则\n\n第一条 为维护学校正常的教育教学秩序和生活秩序，努力为学生营造安全、卫生、文明、和谐的学习、生活环境，依据教育法、高等教育法、教育部《普通高等学校学生管理规定》《大连大学学生管理规定（修订）》《大连大学学生违纪管理规定（修订）》以及其他有关法律、法规，结合我校实际情况，制定本规定。\n\n第二条 本规定适用于学校所有学生宿舍及在校住宿的各类学生…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/27.大连大学学生宿舍管理规定.md",
+      "expected_evidence_keywords": [
+        "来访客人要在宿舍楼关门前离开",
+        "禁止留宿"
+      ],
+      "expected_evidence_quote": "来访客人要在宿舍楼关门前离开，禁止留宿，离开宿舍时要到门卫室注销登记。",
+      "hit": true,
+      "rank": 2,
+      "evidence_hit": false,
+      "evidence_rank": null,
+      "evidence_matches": []
+    },
+    {
+      "id": "dorm-check-grades",
+      "type": "positive",
+      "query": "寝室检查结果评定分为哪几类",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 112.27,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/12.大连大学学生综合素质测评办法.md",
+          "score": 0.6132,
+          "chunk_id": "12.大连大学学生综合素质测评办法.md_4",
+          "text_length": 500,
+          "snippet": "到(12)宿舍无违纪,但本人有≤2次卫生检查不达标记录(8)</td></tr></table>\n\n<table><tr><td>赋分指标</td><td>C(40分以上)</td><td>D(40分以下)</td></tr><tr><td></td><td>能参加政治理论学习活动,但有</td><td>政治上不求进取,有消极抵触</td></tr><tr><td rowspan=\"4\">思\n想…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/12.大连大学学生综合素质测评办法.md",
+          "score": 0.5835,
+          "chunk_id": "12.大连大学学生综合素质测评办法.md_7",
+          "text_length": 258,
+          "snippet": "活动,积极参与教改,或能够在校报上发表文章(7)2.积极参加学习和其他问题的讨论,并有较深刻的见解。(10)</td><td>1.积极参加各种问题的讨论(6)2.社会实践调查报告完成情况较差(或完成)(8)3.自学能力较差(20)4.社交能力、语言文字表达能力</td></tr><tr><td></td><td>3.积极参加社会实践，并能认真完成社会实践调查报告(15)4.具有一定的自学能力(3…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/12.大连大学学生综合素质测评办法.md",
+          "score": 0.5773,
+          "chunk_id": "12.大连大学学生综合素质测评办法.md_5",
+          "text_length": 500,
+          "snippet": "生检查中有≤5次不\n达标或有两次脏乱差或因违章\n而扣分≥4分的记录（2）-0（并且有个别是责任承担\n者）</td></tr></table>\n\n<table><tr><td>赋分指标</td><td>A(90分以上)</td></tr><tr><td>身心健康素质</td><td>1.按时出操、无旷操，偶有病假（2次），并且积极参加课外体育活动（50）\n2.体育成绩为优秀以上(20)\n3.对各种…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/12.大连大学学生综合素质测评办法.md",
+          "score": 0.5694,
+          "chunk_id": "12.大连大学学生综合素质测评办法.md_6",
+          "text_length": 500,
+          "snippet": ")(40)\n5.具有较强的社交能力，语言文字表达能力(20)</td></tr></table>\n\n<table><tr><td>赋分指标</td><td>B(70分以上)</td><td>C(40分以上)</td></tr><tr><td>身心素质</td><td>1.按时出操、无旷操,病事假≤3次(少一次扣2分),经常参加课外体育活动(40)2.体育成绩在良好以上(15)3.对各种环境有较强…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/28.大连大学学生寝室安全、纪律、卫生检查标准.md",
+          "score": 0.3702,
+          "chunk_id": "28.大连大学学生寝室安全、纪律、卫生检查标准.md_2",
+          "text_length": 249,
+          "snippet": "# 三、卫生检查标准\n\n1.个人物品摆放整齐有序，无乱扔、乱放、乱挂现象。\n2.坚持开窗通风换气，保持寝室内空气清新无异味。\n3.床铺整洁，被褥叠放整齐，床体无移位、拆卸等现象。\n4.桌、椅、门、柜面干净整洁，无粘贴字画或广告等。\n5.棚面、墙面无灰网。\n6.门窗玻璃无遮挡，窗台干净整洁。\n7.地面整洁见本色，无垃圾、杂物等，及时倾倒垃圾。\n8.卫生间器具整洁，无异味。\n9.阳台干净整洁，无杂物…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/28.大连大学学生寝室安全、纪律、卫生检查标准.md",
+      "expected_evidence_keywords": [
+        "检查结果评定标准分为",
+        "脏乱差"
+      ],
+      "expected_evidence_quote": "检查结果评定标准分为：⑴达标、⑵不达标、⑶脏乱差、⑷违纪，达标寝室不发送《学生寝室安全、纪律、卫生检查通知单》。",
+      "hit": true,
+      "rank": 5,
+      "evidence_hit": false,
+      "evidence_rank": null,
+      "evidence_matches": []
+    },
+    {
+      "id": "degree-cheat",
+      "type": "positive",
+      "query": "在校期间因考试作弊受过处分还能授予学士学位吗",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 146.88,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+          "score": 0.6619,
+          "chunk_id": "25.大连大学学士学位授予工作实施细则.md_6",
+          "text_length": 500,
+          "snippet": "# （二）有下列情况之一者，不授予学士学位\n\n1.经审核未准予毕业者。\n2.有明显的与中国和中国人民为敌，散布大量对中国不友好的言论，造成恶劣影响者，或者因违法违纪受到法律制裁或在校期间受到相关处分者。\n3.在校学习期间，因考试作弊受处分者。\n\n五、不符合学位授予条件者，（因本细则三（二）1 项或因《大连大学考试违规处理办法》第八条（一）、（二）款所列行为受处分者除外），如果具备下列条件之一，可…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+          "score": 0.6141,
+          "chunk_id": "25.大连大学学士学位授予工作实施细则.md_4",
+          "text_length": 173,
+          "snippet": "# （二）有下列情况之一者，不授予学士学位\n\n1.经审核未准予毕业者。\n2.在校学习期间，因不当言论或行为受过处分者。\n3.在校学习期间，因考试作弊受处分者。\n4.在校学习期间，通过重修获得的学分大于等于 30学分（五年制为 35学分）者。\n5.外国语言文学类专业未达到该专业外语规定标准者。\n6.培养方案中设置的学位课程考核成绩未达到70分者。",
+          "snippet_truncated": false
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/23.大连大学考试违规处理办法.md",
+          "score": 0.5989,
+          "chunk_id": "23.大连大学考试违规处理办法.md_2",
+          "text_length": 456,
+          "snippet": "六）在身体、衣物等处写有与本次考试有关的内容。\n（七）携带与考试内容相关的文字材料或者电子存储设备。\n（八）传、接与考试相关的物品或者交换试卷、答卷、草稿纸。\n（九）其他作弊行为。\n\n第八条 在考试前后或在考试过程中发现下列行为之一的，应当认定相关的考生实施了考试作弊行为。本次考试成绩无效，取消二考资格，视情节轻重给予留校察看或开除学籍处分。\n\n（一）在答卷上填写当场考试其他考生姓名、考号等信息…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/10.大连大学学生违纪管理规定.md",
+          "score": 0.3996,
+          "chunk_id": "10.大连大学学生违纪管理规定.md_11",
+          "text_length": 384,
+          "snippet": "留校察看处分；\n\n（五）未经批准离校连续两周未参加学校规定的教学活动的视为放弃学籍，按自动退学处理。\n\n第二十六条 违反考试纪律的，视其情节给予下列处分：\n\n（一）考场违纪者，视情节给予警告或严重警告处分；\n（二）考场作弊者，视情节给予留校察看以上处分。代替他人或者让他人代替自己参加考试、组织作弊、使用通讯设备或其他器材作弊、向他人出售考试试题或答案牟取利益，以及其他严重作弊或扰乱考试秩序行为的…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/1.普通高等学校学生管理规定.md",
+          "score": 0.3876,
+          "chunk_id": "1.普通高等学校学生管理规定.md_5",
+          "text_length": 224,
+          "snippet": "，其已获得学分，经录取学校认定，可以予以承认。\n\n第十九条 学生应当按时参加教育教学计划规定的活动。不能按时参加的，应当事先请假并获得批准。无故缺席的，根据学校有关规定给予批评教育，情节严重的，给予相应的纪律处分。\n\n第二十条 学校应当开展学生诚信教育，以适当方式记录学生学业、学术、品行等方面的诚信信息，建立对失信行为的约束和惩戒机制；对有严重失信行为的，可以规定给予相应的纪律处分，对违背学术诚…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+      "expected_evidence_keywords": [
+        "因考试作弊受处分者",
+        "不授予学士学位"
+      ],
+      "expected_evidence_quote": "在校学习期间，因考试作弊受处分者。",
+      "hit": true,
+      "rank": 1,
+      "evidence_hit": true,
+      "evidence_rank": 1,
+      "evidence_matches": [
+        {
+          "keyword": "因考试作弊受处分者",
+          "start": 111,
+          "end": 120
+        },
+        {
+          "keyword": "不授予学士学位",
+          "start": 14,
+          "end": 21
+        }
+      ],
+      "evidence_report_snippet_truncated": true
+    },
+    {
+      "id": "degree-course-score",
+      "type": "positive",
+      "query": "学位课程考核成绩要达到多少分才能授予学士学位",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 171.84,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+          "score": 0.6134,
+          "chunk_id": "25.大连大学学士学位授予工作实施细则.md_3",
+          "text_length": 161,
+          "snippet": "# 三、全日制普通高等学校本科生学士学位授予条件\n\n# （一）符合下列条件者，授予学士学位\n\n1.爱祖国，爱人民，遵纪守法，品德端正，认可中国特色社会主义共同理想。\n2.完成培养方案规定的课程、实验、实习和毕业论文（设计）等所有内容，并获得相应的学分，经审核准予毕业。\n3.培养方案中设置的学位课程考核成绩达到 70 分。",
+          "snippet_truncated": false
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+          "score": 0.6099,
+          "chunk_id": "25.大连大学学士学位授予工作实施细则.md_6",
+          "text_length": 500,
+          "snippet": "# （二）有下列情况之一者，不授予学士学位\n\n1.经审核未准予毕业者。\n2.有明显的与中国和中国人民为敌，散布大量对中国不友好的言论，造成恶劣影响者，或者因违法违纪受到法律制裁或在校期间受到相关处分者。\n3.在校学习期间，因考试作弊受处分者。\n\n五、不符合学位授予条件者，（因本细则三（二）1 项或因《大连大学考试违规处理办法》第八条（一）、（二）款所列行为受处分者除外），如果具备下列条件之一，可…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+          "score": 0.6029,
+          "chunk_id": "25.大连大学学士学位授予工作实施细则.md_4",
+          "text_length": 173,
+          "snippet": "# （二）有下列情况之一者，不授予学士学位\n\n1.经审核未准予毕业者。\n2.在校学习期间，因不当言论或行为受过处分者。\n3.在校学习期间，因考试作弊受处分者。\n4.在校学习期间，通过重修获得的学分大于等于 30学分（五年制为 35学分）者。\n5.外国语言文学类专业未达到该专业外语规定标准者。\n6.培养方案中设置的学位课程考核成绩未达到70分者。",
+          "snippet_truncated": false
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+          "score": 0.6028,
+          "chunk_id": "25.大连大学学士学位授予工作实施细则.md_7",
+          "text_length": 433,
+          "snippet": "# 六、学士学位授予程序\n\n1.各学院（部）学士学位评定工作组对拟授予学士学位的本科毕业生，审核其在校学习期间的成绩、重修学分、学位课程成绩、外国语言文学类专业外语成绩、行政处分等相关资料。将符合授予学士学位条件的学生名单，报学士学位评定办公室；对达到毕业条件，不符合学位授予条件，但具备第五条中所列条件之一并符合相关规定者，审核其材料的真实性及有效性，并将审核结果及意见报学士学位评定分委员会工作…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+          "score": 0.5937,
+          "chunk_id": "25.大连大学学士学位授予工作实施细则.md_0",
+          "text_length": 271,
+          "snippet": "（1995 年制定，2023 年修订）\n\n为贯彻落实党的教育方针和立德树人根本任务，坚持以人才培养质量为核心，培养德智体美劳全面发展的社会主义建设者和接班人，进一步加强学士学位授予管理工作，提升本科教育质量，根据《中华人民共和国高等教育法》《中华人民共和国学位条例》及其暂行实施办法、国务院学位委员会《学士学位授权与授予管理办法》（学位[2019]20 号）和《辽宁省人民政府学位委员会关于印发辽宁…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+      "expected_evidence_keywords": [
+        "学位课程考核成绩达到70分"
+      ],
+      "expected_evidence_quote": "培养方案中设置的学位课程考核成绩达到 70 分。",
+      "hit": true,
+      "rank": 1,
+      "evidence_hit": true,
+      "evidence_rank": 1,
+      "evidence_matches": [
+        {
+          "keyword": "学位课程考核成绩达到70分",
+          "start": 145,
+          "end": 160
+        }
+      ],
+      "evidence_report_snippet_truncated": false
+    },
+    {
+      "id": "scholarship-models",
+      "type": "positive",
+      "query": "大学生标兵奖学金每年评选多少人，金额是多少",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 167.0,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+          "score": 0.5854,
+          "chunk_id": "13.大连大学学生奖学金管理办法.md_4",
+          "text_length": 379,
+          "snippet": "# （三）本学年度未受到校纪处分。\n\n个人奖学金的评比，必须具备以上基本条件，同时还应具备各项个人奖学金评比的具体条件。\n\n# 第八条 大学生标兵奖学金\n\n全校每年评选10名大学生标兵，奖学金金额3000元。\n\n(一) 在学生中有较高威信，能够发挥榜样作用并为学校带来良好的社会声誉。\n\n(二) 学习目的明确，学习态度端正，本学年度平均学分绩点达到3.5以上（或一学年平均学习成绩名列本专业、本年级…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+          "score": 0.5837,
+          "chunk_id": "13.大连大学学生奖学金管理办法.md_8",
+          "text_length": 198,
+          "snippet": "# 第十三条 先进个人奖学金评选办法\n\n本人申报、学生民主评议、学院学生工作领导小组审核并在学院内公示，报学生处，经校学生奖励评审委员会审定，全校公示后报分管校长批准。\n\n大学生标兵奖学金评选方式：采取学生本人依据评比条件，以书面形式向所在学院学生工作领导小组申请，各学院审核后，向学生处推荐。学生处组织全校大学生标兵候选人进行演讲，各学院组织学生代表参加，学生代表民主评选出大连大学大学生标兵。",
+          "snippet_truncated": false
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+          "score": 0.5616,
+          "chunk_id": "13.大连大学学生奖学金管理办法.md_6",
+          "text_length": 235,
+          "snippet": "# 第十条 优秀学生干部奖学金条件\n\n优秀学生干部评选比例不超过所在学院参评本年度个人奖学金学生人数的 $6 \\%$ ，奖学金金额600元。\n\n(一) 担任学生干部职务一年以上，工作认真负责，有较强的组织能力和合作意识，工作成绩显著，群众威信高。达到《国家学生体质健康标准》合格以上。\n(二)本学年度平均学分绩点达到 2.6 以上，学习成绩全部及格。\n(三) 参加优秀学生干部评选的对象包括校、院学…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+          "score": 0.5607,
+          "chunk_id": "13.大连大学学生奖学金管理办法.md_3",
+          "text_length": 123,
+          "snippet": "# 第七条 个人奖学金评选的基本条件\n\n(一)热爱社会主义祖国，拥护中国共产党的领导，坚持四项基本原则，遵守《高等学校学生行为准则》和校规校纪。\n(二) 热爱所学专业，勤奋刻苦，学习成绩合格，本学年度内修读学分不得低于培养方案规定的该年级学分数。",
+          "snippet_truncated": false
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+          "score": 0.5591,
+          "chunk_id": "13.大连大学学生奖学金管理办法.md_1",
+          "text_length": 109,
+          "snippet": "# 第二章 奖项设置\n\n第三条学校设立的集体奖学金：先进班集体。\n\n第四条 学校设立的个人奖学金：大学生标兵、优秀学生(含三好学生)、优秀学生干部。\n\n第五条 国家、政府、社会团体或个人设立的奖学金按当年下发文件执行。",
+          "snippet_truncated": false
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+      "expected_evidence_keywords": [
+        "评选10名大学生标兵",
+        "奖学金金额3000元"
+      ],
+      "expected_evidence_quote": "全校每年评选10名大学生标兵，奖学金金额3000元。",
+      "hit": true,
+      "rank": 1,
+      "evidence_hit": true,
+      "evidence_rank": 1,
+      "evidence_matches": [
+        {
+          "keyword": "评选10名大学生标兵",
+          "start": 82,
+          "end": 92
+        },
+        {
+          "keyword": "奖学金金额3000元",
+          "start": 93,
+          "end": 103
+        }
+      ],
+      "evidence_report_snippet_truncated": true
+    },
+    {
+      "id": "scholarship-first-class",
+      "type": "positive",
+      "query": "优秀学生一等奖学金金额和绩点要求是什么",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 159.23,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+          "score": 0.6172,
+          "chunk_id": "13.大连大学学生奖学金管理办法.md_5",
+          "text_length": 500,
+          "snippet": "# 第九条 优秀学生奖学金\n\n(一)本科生外语过四级，专科生及音、体、美专业外语过三级（英语专业和其它语种比照执行,一年级学生第一学年外语不做此要求）。\n(二)积极参加科技创新和校园文化活动，并获得校级以上奖励，表现出较强的科研创新能力；热爱公益事业，具有较强的集体观念，自强自立，甘于奉献，或在校内承担一定社会工作，经所在团队民意测评称职率达到 $8 5 \\%$ 以上。若不具备此条件，则依次降低…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+          "score": 0.5948,
+          "chunk_id": "13.大连大学学生奖学金管理办法.md_6",
+          "text_length": 235,
+          "snippet": "# 第十条 优秀学生干部奖学金条件\n\n优秀学生干部评选比例不超过所在学院参评本年度个人奖学金学生人数的 $6 \\%$ ，奖学金金额600元。\n\n(一) 担任学生干部职务一年以上，工作认真负责，有较强的组织能力和合作意识，工作成绩显著，群众威信高。达到《国家学生体质健康标准》合格以上。\n(二)本学年度平均学分绩点达到 2.6 以上，学习成绩全部及格。\n(三) 参加优秀学生干部评选的对象包括校、院学…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+          "score": 0.5938,
+          "chunk_id": "13.大连大学学生奖学金管理办法.md_4",
+          "text_length": 379,
+          "snippet": "# （三）本学年度未受到校纪处分。\n\n个人奖学金的评比，必须具备以上基本条件，同时还应具备各项个人奖学金评比的具体条件。\n\n# 第八条 大学生标兵奖学金\n\n全校每年评选10名大学生标兵，奖学金金额3000元。\n\n(一) 在学生中有较高威信，能够发挥榜样作用并为学校带来良好的社会声誉。\n\n(二) 学习目的明确，学习态度端正，本学年度平均学分绩点达到3.5以上（或一学年平均学习成绩名列本专业、本年级…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+          "score": 0.5865,
+          "chunk_id": "13.大连大学学生奖学金管理办法.md_1",
+          "text_length": 109,
+          "snippet": "# 第二章 奖项设置\n\n第三条学校设立的集体奖学金：先进班集体。\n\n第四条 学校设立的个人奖学金：大学生标兵、优秀学生(含三好学生)、优秀学生干部。\n\n第五条 国家、政府、社会团体或个人设立的奖学金按当年下发文件执行。",
+          "snippet_truncated": false
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+          "score": 0.5855,
+          "chunk_id": "13.大连大学学生奖学金管理办法.md_3",
+          "text_length": 123,
+          "snippet": "# 第七条 个人奖学金评选的基本条件\n\n(一)热爱社会主义祖国，拥护中国共产党的领导，坚持四项基本原则，遵守《高等学校学生行为准则》和校规校纪。\n(二) 热爱所学专业，勤奋刻苦，学习成绩合格，本学年度内修读学分不得低于培养方案规定的该年级学分数。",
+          "snippet_truncated": false
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/13.大连大学学生奖学金管理办法.md",
+      "expected_evidence_keywords": [
+        "奖学金金额2000元",
+        "平均学分绩点达到3.0以上"
+      ],
+      "expected_evidence_quote": "优秀学生一等奖学金（同时授予三好学生称号）：奖学金金额 2000元，本学年度平均学分绩点达到3.0以上",
+      "hit": true,
+      "rank": 1,
+      "evidence_hit": true,
+      "evidence_rank": 1,
+      "evidence_matches": [
+        {
+          "keyword": "奖学金金额2000元",
+          "start": 318,
+          "end": 329
+        },
+        {
+          "keyword": "平均学分绩点达到3.0以上",
+          "start": 334,
+          "end": 347
+        }
+      ],
+      "evidence_report_snippet_truncated": true
+    },
+    {
+      "id": "orphan-materials",
+      "type": "positive",
+      "query": "孤儿大学生申请减免需要提供哪些孤儿身份证明材料",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 168.0,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/15.大连大学学生临时性困难补助管理暂行办法.md",
+          "score": 0.5308,
+          "chunk_id": "15.大连大学学生临时性困难补助管理暂行办法.md_2",
+          "text_length": 500,
+          "snippet": "# 第三章 补助方式和标准\n\n第六条 学生临时性困难补助采取一次性补助的方式，经由相关学院或培养单位和学生处或研究生学院审批通过后，学生处或研究生学院将受资助学生名单及发放金额报财务处，由财务处审核后将补助款发放至学生银行卡或校内一卡通。\n\n第七条 学生临时性困难补助金额由相关学院或培养单位和学生处或研究生学院根据学生实际情况，综合考虑确定。学生临时性困难补助标准为 1000 元、2000 元、…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/15.大连大学学生临时性困难补助管理暂行办法.md",
+          "score": 0.5288,
+          "chunk_id": "15.大连大学学生临时性困难补助管理暂行办法.md_1",
+          "text_length": 320,
+          "snippet": "# 第二章 补助对象和条件\n\n第四条 学生临时性困难补助的申请对象为我校在籍的全日制本科生、硕士研究生。\n\n第五条 我校在籍`全日制本科生，硕士研究生，符合下列条件之一，且造成学生家庭经济特别困难，急需帮扶的学生可申请临时困难补助：\n\n（一）学生本人突患重病或遭遇意外事故，所需治疗费用较高，自付费用对其家庭构成较大经济压力的；\n\n（二）父母或监护人突患重病或家庭突遭变故，对学生经济来源和学业受到…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/14.大连大学孤儿大学生学费、住宿费减免办法.md",
+          "score": 0.4314,
+          "chunk_id": "14.大连大学孤儿大学生学费、住宿费减免办法.md_1",
+          "text_length": 231,
+          "snippet": "# 第一条 减免对象\n\n具有我校正式学籍的在校孤儿大学生。\n\n# 第二条 身份认定\n\n本办法中的孤儿大学生是指未满 18周岁时失去父母且当今仍无父母、具有我校全日制普通本科学籍的在校大学生。失去父母是指父母死亡、法院宣告父母死亡或宣告失踪、父母下落不明满 2年；父母包括生父母、具有抚养关系的继父母、已依法办理收养登记手续的养父母。\n\n已满18周岁后失去父母的、一直由儿童福利机构抚养的弃婴、父母重…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/14.大连大学孤儿大学生学费、住宿费减免办法.md",
+          "score": 0.3965,
+          "chunk_id": "14.大连大学孤儿大学生学费、住宿费减免办法.md_4",
+          "text_length": 457,
+          "snippet": "# 第六条 减免程序\n\n学校成立孤儿大学生学费、住宿费减免工作领导小组，该小组由分管学生工作的校领导任组长，学校助学贷款办公室具体负责组织和管理全校孤儿大学生的资助工作。减免具体程序为：\n\n1.学生申请：符合减免条件的学生，每年 9月向所在学院提出书面申请，填写《大连大学孤儿大学生减免学费、住宿费审批表》（附件1），并提供教育部制订的《高等学校学生及家庭情况调查表》（附件 2）和第三条中的认定材…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/14.大连大学孤儿大学生学费、住宿费减免办法.md",
+          "score": 0.3956,
+          "chunk_id": "14.大连大学孤儿大学生学费、住宿费减免办法.md_2",
+          "text_length": 284,
+          "snippet": "# 第三条 认定材料\n\n1.学生本人户口本（含首页、户主页、本人页）原件（以电子照片形式提供）和复印件；\n2.学生本人身份证（正反面）原件（以电子照片形式提供）和复印件；\n3.能够证明孤儿身份的下列有关材料：\n\n（1）孤儿院或孤儿学校等社会福利机构的证明原件；\n（2）《儿童福利证》等类似的孤儿证件原件；\n（3）父母死亡证明复印件，法院宣告死亡判决书、宣告失踪判决书原件，公安机关或其他有关机关、下…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/14.大连大学孤儿大学生学费、住宿费减免办法.md",
+      "expected_evidence_keywords": [
+        "孤儿院或孤儿学校等社会福利机构的证明原件",
+        "《儿童福利证》"
+      ],
+      "expected_evidence_quote": "（1）孤儿院或孤儿学校等社会福利机构的证明原件；（2）《儿童福利证》等类似的孤儿证件原件；",
+      "hit": true,
+      "rank": 3,
+      "evidence_hit": true,
+      "evidence_rank": 5,
+      "evidence_matches": [
+        {
+          "keyword": "孤儿院或孤儿学校等社会福利机构的证明原件",
+          "start": 109,
+          "end": 129
+        },
+        {
+          "keyword": "《儿童福利证》",
+          "start": 134,
+          "end": 141
+        }
+      ],
+      "evidence_report_snippet_truncated": true
+    },
+    {
+      "id": "orphan-timing",
+      "type": "positive",
+      "query": "孤儿大学生学费住宿费减免什么时候进行、怎么减免",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 162.97,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/14.大连大学孤儿大学生学费、住宿费减免办法.md",
+          "score": 0.4036,
+          "chunk_id": "14.大连大学孤儿大学生学费、住宿费减免办法.md_1",
+          "text_length": 231,
+          "snippet": "# 第一条 减免对象\n\n具有我校正式学籍的在校孤儿大学生。\n\n# 第二条 身份认定\n\n本办法中的孤儿大学生是指未满 18周岁时失去父母且当今仍无父母、具有我校全日制普通本科学籍的在校大学生。失去父母是指父母死亡、法院宣告父母死亡或宣告失踪、父母下落不明满 2年；父母包括生父母、具有抚养关系的继父母、已依法办理收养登记手续的养父母。\n\n已满18周岁后失去父母的、一直由儿童福利机构抚养的弃婴、父母重…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/14.大连大学孤儿大学生学费、住宿费减免办法.md",
+          "score": 0.3984,
+          "chunk_id": "14.大连大学孤儿大学生学费、住宿费减免办法.md_4",
+          "text_length": 457,
+          "snippet": "# 第六条 减免程序\n\n学校成立孤儿大学生学费、住宿费减免工作领导小组，该小组由分管学生工作的校领导任组长，学校助学贷款办公室具体负责组织和管理全校孤儿大学生的资助工作。减免具体程序为：\n\n1.学生申请：符合减免条件的学生，每年 9月向所在学院提出书面申请，填写《大连大学孤儿大学生减免学费、住宿费审批表》（附件1），并提供教育部制订的《高等学校学生及家庭情况调查表》（附件 2）和第三条中的认定材…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/14.大连大学孤儿大学生学费、住宿费减免办法.md",
+          "score": 0.3711,
+          "chunk_id": "14.大连大学孤儿大学生学费、住宿费减免办法.md_3",
+          "text_length": 122,
+          "snippet": "# 第四条 减免条件\n\n1.品行端正，遵纪守法，无违法违纪行为。\n2.自立自强、诚实守信、积极参与勤工俭学工作。\n3.生活简朴，无酗酒、沉迷网络等不良嗜好。\n\n# 第五条 减免方式\n\n减免工作每年秋季学期进行，学校按学制一次性减免学费及住宿费。",
+          "snippet_truncated": false
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/14.大连大学孤儿大学生学费、住宿费减免办法.md",
+          "score": 0.3682,
+          "chunk_id": "14.大连大学孤儿大学生学费、住宿费减免办法.md_6",
+          "text_length": 312,
+          "snippet": "# 第八条 其他事宜\n\n各学院每学年按照学校整体资助工作安排，进行孤儿认定基础工作。认定中要结合学生思想状况调查、贫困生认定、助学贷款申请、未缴费原因调查、学生谈心等工作和学生日常表现、日常消费等情况，细致摸底排查，准确了解相关信息，查验相关证明，与抚养人、学生亲属、毕业中学、当地有关部门等多方联系，全面了解学生的经济状况和成为孤儿时间、原因等详细情况。必要时采取查验证明原件、实地走访调查等措施…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/14.大连大学孤儿大学生学费、住宿费减免办法.md",
+          "score": 0.3657,
+          "chunk_id": "14.大连大学孤儿大学生学费、住宿费减免办法.md_5",
+          "text_length": 261,
+          "snippet": "# 第七条 不予减免和停止减免的情况\n\n1.学生凡出现下列情形之一者，学校不予减免学费及住宿费：\n\n（1）享受应征入伍学费补偿、国家助学贷款代偿、退役复学学费减免、退役士兵学费资助的（与学费和住宿费总和的差额部分除外）;\n（2）提供虚假申报材料的。\n\n2.超出学制学年限所产生的住宿费不予减免；\n\n3.已获得减免学费及住宿费的学生在校期间违反国家法律或校规校纪，受到留校察看及以上处分的，学校将停止…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/14.大连大学孤儿大学生学费、住宿费减免办法.md",
+      "expected_evidence_keywords": [
+        "减免工作每年秋季学期进行",
+        "学校按学制一次性减免学费及住宿费"
+      ],
+      "expected_evidence_quote": "减免工作每年秋季学期进行，学校按学制一次性减免学费及住宿费。",
+      "hit": true,
+      "rank": 1,
+      "evidence_hit": true,
+      "evidence_rank": 3,
+      "evidence_matches": [
+        {
+          "keyword": "减免工作每年秋季学期进行",
+          "start": 92,
+          "end": 104
+        },
+        {
+          "keyword": "学校按学制一次性减免学费及住宿费",
+          "start": 105,
+          "end": 121
+        }
+      ],
+      "evidence_report_snippet_truncated": false
+    },
+    {
+      "id": "appeal-deadline",
+      "type": "positive",
+      "query": "对学校的处理决定有异议应在多少日内提出申诉",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 162.14,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/11.大连大学学生申诉处理办法.md",
+          "score": 0.6378,
+          "chunk_id": "11.大连大学学生申诉处理办法.md_2",
+          "text_length": 421,
+          "snippet": "者专门会议作出处理、处分决定：\n\n(1)认定事实不存在，或者学校超越职权、违反上位法规定作出决定的；\n\n(2) 认定事实清楚，但认定情节有误、定性不准确，或者适用依据有错误的；\n(3) 认定事实不清、证据不足，或者违反相关规定的程序和权限的。\n\n对变更退学处理或开除学籍处分的，由校长办公会议研究决定。\n\n第十二条 学生申诉委员会应当在15日内将学校复查决定书送达申诉人。送达方式如下：\n\n1.申诉…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/11.大连大学学生申诉处理办法.md",
+          "score": 0.6323,
+          "chunk_id": "11.大连大学学生申诉处理办法.md_1",
+          "text_length": 500,
+          "snippet": "# 第二章 申诉的受理和程序\n\n第六条 学生对学校作出的涉及本人权益的处理（如取消入学资格及各种纪律处分等）决定有异议的，可以向学校学生申诉处理委员会提出申诉，申诉必须在收到处理决定或者在处理决定公告之日起 10日内提出。逾期未提出的，学校学生申诉处理委员会不再受理其提出的申诉。\n\n第七条 申诉人提出申诉时，应当向学校学生申诉处理委员会递交申诉申请书，并附上学校作出的处理决定书（复印件)。 申诉…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/11.大连大学学生申诉处理办法.md",
+          "score": 0.6277,
+          "chunk_id": "11.大连大学学生申诉处理办法.md_0",
+          "text_length": 421,
+          "snippet": "（校发 [2019] 73 号）\n\n# 第一章 总则\n\n第一条 为保证学生的合法权益和主体地位，规范校内学生申诉制度，根据教育部颁布的《普通高等学校学生管理规定》和有关法律、法规，制定本规定。\n\n第二条 本规定所称的申诉，是指学生对学校作出的涉及学生本人权益的处理决定有异议，向学校提出的申诉。\n\n第三条 本规定适用于我校在籍的研究生、本科学生（我校其他类别的学生可以参照本办法执行）。\n\n第四条 …",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/1.普通高等学校学生管理规定.md",
+          "score": 0.6271,
+          "chunk_id": "1.普通高等学校学生管理规定.md_15",
+          "text_length": 500,
+          "snippet": "# 第六章 学生申诉\n\n第五十九条 学校应当成立学生申诉处理委员会，负责受理学生对处理或者处分决定不服提起的申诉。\n\n学生申诉处理委员会应当由学校相关负责人、职能部门负责人、教师代表、学生代表、负责法律事务的相关机构负责人等组成，可以聘请校外法律、教育等方面专家参加。\n\n学校应当制定学生申诉的具体办法，健全学生申诉处理委员会的组成与工作规则，提供必要条件，保证其能够客观、公正地履行职责。\n\n第六…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/1.普通高等学校学生管理规定.md",
+          "score": 0.6255,
+          "chunk_id": "1.普通高等学校学生管理规定.md_16",
+          "text_length": 500,
+          "snippet": "，予以维持；\n\n（二）认定事实不存在，或者学校超越职权、违反上位法规定作出决定的，责令学校予以撤销；\n\n（三）认定事实清楚，但认定情节有误、定性不准确，或者适用依据有错误的，责令学校变更或者重新作出决定；\n\n（四）认定事实不清、证据不足，或者违反本规定以及学校规定的程序和权限的，责令学校重新作出决定。\n\n第六十四条 自处理、处分或者复查决定书送达之日起，学生在申诉期内未提出申诉的视为放弃申诉，学…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/11.大连大学学生申诉处理办法.md",
+      "expected_evidence_keywords": [
+        "10日内提出",
+        "不再受理其提出的申诉"
+      ],
+      "expected_evidence_quote": "申诉必须在收到处理决定或者在处理决定公告之日起 10日内提出。逾期未提出的，学校学生申诉处理委员会不再受理其提出的申诉。",
+      "hit": true,
+      "rank": 1,
+      "evidence_hit": true,
+      "evidence_rank": 2,
+      "evidence_matches": [
+        {
+          "keyword": "10日内提出",
+          "start": 104,
+          "end": 110
+        },
+        {
+          "keyword": "不再受理其提出的申诉",
+          "start": 129,
+          "end": 139
+        }
+      ],
+      "evidence_report_snippet_truncated": true
+    },
+    {
+      "id": "appeal-review-period",
+      "type": "positive",
+      "query": "申诉复查结论多少日内作出",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 112.41,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/11.大连大学学生申诉处理办法.md",
+          "score": 0.5559,
+          "chunk_id": "11.大连大学学生申诉处理办法.md_2",
+          "text_length": 421,
+          "snippet": "者专门会议作出处理、处分决定：\n\n(1)认定事实不存在，或者学校超越职权、违反上位法规定作出决定的；\n\n(2) 认定事实清楚，但认定情节有误、定性不准确，或者适用依据有错误的；\n(3) 认定事实不清、证据不足，或者违反相关规定的程序和权限的。\n\n对变更退学处理或开除学籍处分的，由校长办公会议研究决定。\n\n第十二条 学生申诉委员会应当在15日内将学校复查决定书送达申诉人。送达方式如下：\n\n1.申诉…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/11.大连大学学生申诉处理办法.md",
+          "score": 0.5488,
+          "chunk_id": "11.大连大学学生申诉处理办法.md_3",
+          "text_length": 500,
+          "snippet": "# 第三章 听证的规定和程序\n\n第十五条 学生申诉处理委员会在处理申诉复查工作中，可以根据申诉人（申诉代理人）的请求，也可以根据复查工作的实际需要，采取听证的方式处理申诉。 对没有请求听证的申诉人，在实施听证前应当征得申诉人或者其代理人的同意。因复查工作的特殊需要，经学生申诉处理委员会集体研究也可以做出听证的决定。\n\n第十六条 听证工作必须设置听证主持人 1人，听证记录员2人。听证主持人由学生申…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/11.大连大学学生申诉处理办法.md",
+          "score": 0.5377,
+          "chunk_id": "11.大连大学学生申诉处理办法.md_1",
+          "text_length": 500,
+          "snippet": "# 第二章 申诉的受理和程序\n\n第六条 学生对学校作出的涉及本人权益的处理（如取消入学资格及各种纪律处分等）决定有异议的，可以向学校学生申诉处理委员会提出申诉，申诉必须在收到处理决定或者在处理决定公告之日起 10日内提出。逾期未提出的，学校学生申诉处理委员会不再受理其提出的申诉。\n\n第七条 申诉人提出申诉时，应当向学校学生申诉处理委员会递交申诉申请书，并附上学校作出的处理决定书（复印件)。 申诉…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/11.大连大学学生申诉处理办法.md",
+          "score": 0.5356,
+          "chunk_id": "11.大连大学学生申诉处理办法.md_4",
+          "text_length": 289,
+          "snippet": "自己提出的申诉事项、申诉原因和依据进行陈诉、申辩，并应当出示相关的证明材料（或者提供证人、证言等）；\n5.在听证主持人允许下，听证参加人可以根据相关的证据材料对申诉人和被申诉方的代表进行询问；\n\n6.有关当事人做最后陈述；\n\n7.听证记录员1人负责文字记录，1人负责录音。听证工作结束前，听证主持人、听证记录员、参加听证双方的当事人应当在听证的文字记录上签名盖章；\n8.听证主持人宣布听证结束。\n\n…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/11.大连大学学生申诉处理办法.md",
+          "score": 0.5249,
+          "chunk_id": "11.大连大学学生申诉处理办法.md_0",
+          "text_length": 421,
+          "snippet": "（校发 [2019] 73 号）\n\n# 第一章 总则\n\n第一条 为保证学生的合法权益和主体地位，规范校内学生申诉制度，根据教育部颁布的《普通高等学校学生管理规定》和有关法律、法规，制定本规定。\n\n第二条 本规定所称的申诉，是指学生对学校作出的涉及学生本人权益的处理决定有异议，向学校提出的申诉。\n\n第三条 本规定适用于我校在籍的研究生、本科学生（我校其他类别的学生可以参照本办法执行）。\n\n第四条 …",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/11.大连大学学生申诉处理办法.md",
+      "expected_evidence_keywords": [
+        "15日内作出复查结论",
+        "可延长15日"
+      ],
+      "expected_evidence_quote": "并在接到书面申诉之日起 15日内作出复查结论并以书面形式告知申诉人。",
+      "hit": true,
+      "rank": 1,
+      "evidence_hit": true,
+      "evidence_rank": 3,
+      "evidence_matches": [
+        {
+          "keyword": "15日内作出复查结论",
+          "start": 398,
+          "end": 408
+        },
+        {
+          "keyword": "可延长15日",
+          "start": 447,
+          "end": 454
+        }
+      ],
+      "evidence_report_snippet_truncated": true
+    },
+    {
+      "id": "safety-candle",
+      "type": "positive",
+      "query": "学生可以在宿舍使用蜡烛吗",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 140.56,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/27.大连大学学生宿舍管理规定.md",
+          "score": 0.5172,
+          "chunk_id": "27.大连大学学生宿舍管理规定.md_3",
+          "text_length": 500,
+          "snippet": "做好原始记录，对宿舍设施使用不当或人为损坏需承担维修费用；若责任不确定，应由本寝室全体成员共同承担。\n\n第十六条 学生宿舍实行周查寝制。学生宿舍管理中心根据《大连大学学生寝室安全、纪律卫生检查标准》进行检查，检查结果转报所属学院（学部）并在校园网学生宿舍管理中心网页通报，作为《劳动教育》课、学生入党、评优等考核指标。\n\n第十七条 学生应自觉养成良好的生活习惯，做好寝室内务整理、通风和室内清洁等工…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/28.大连大学学生寝室安全、纪律、卫生检查标准.md",
+          "score": 0.511,
+          "chunk_id": "28.大连大学学生寝室安全、纪律、卫生检查标准.md_0",
+          "text_length": 273,
+          "snippet": "为营造安全、健康、温馨、舒适的住宿环境，培养大学生安全防范意识和良好的卫生习惯，规范大学生住宿行为，根据《大连大学学生管理规定》和《大连大学学生宿舍管理规定》制定本标准。\n\n# 一、安全检查标准\n\n1.严禁使用明火，严禁存放易燃易爆危险品、有毒有害物品及管制刀具（如：鞭炮、酒精、蜡烛、刀具等）。\n2.严禁使用或存放发热类、大功率电器（如：电热锅、电吹风、电热棒、电褥子等）。\n3.严禁私扯乱拉或改…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/3.高等学校校园秩序管理若干规定.md",
+          "score": 0.506,
+          "chunk_id": "3.高等学校校园秩序管理若干规定.md_1",
+          "text_length": 500,
+          "snippet": "进入学校。接受师生员工个人邀请进入学校探亲访友的外国人、港澳台人员，应当履行门卫登记手续后进入学校。\n\n第八条　依照本规定第五条、第六条、第七条的规定进入学校的人员，应当遵守法律、法规、规章和学校的制度，不得从事与其身份不符的活动，不得危害校园治安。\n\n对违反本规定第五条、第六条、第七条和本条前款规定的人员，师生员工有权向学校保卫机构报告，学校保卫机构可以要求其说明情况或者责令其离开学校。\n\n第…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/3.高等学校校园秩序管理若干规定.md",
+          "score": 0.5012,
+          "chunk_id": "3.高等学校校园秩序管理若干规定.md_2",
+          "text_length": 500,
+          "snippet": "劝其停止设置、安装或者停止活动，已经设置、安装的，学校有关机构可以拆除，或者责令设置者、安装者拆除。\n\n第十二条　在校内从事集会、讲演等公共活动，组织者必须在七十二小时前向学校有关机构提出申请，申请中应当说明活动的目的、人数、时间、地点和负责人的姓名，学校有关机构应当至迟在举行时间的四小时前将许可或者不许可的决定通知组织者，逾期未通知的，视为许可。\n\n集会、讲演等应符合我国的教育方针和相应的法规…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/27.大连大学学生宿舍管理规定.md",
+          "score": 0.4975,
+          "chunk_id": "27.大连大学学生宿舍管理规定.md_2",
+          "text_length": 500,
+          "snippet": "# 第三章 细 则\n\n第七条 入住。新生入住宿舍,需持学校录取证明，本人身份证原件，一张一寸近期免冠照片，到所分配住宿宿舍楼门卫室办理住宿手续并如实填写住宿卡。因复学、延期毕业重修、实习、见习等原因需返校住宿，由学生本人向所属学院（学部）提出申请，学生宿舍管理中心审核同意，到学校财务处缴纳住宿费后方可入住。\n\n第八条 调寝。学生个人因特殊情况需要调整住宿寝室，需由本人提出书面申请，经学院同意报送…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/9.大连大学学生安全教育管理规定.md",
+      "expected_evidence_keywords": [
+        "禁止在宿舍楼内燃烧纸屑",
+        "禁止在宿舍内使用煤油炉、酒精灯、蜡烛"
+      ],
+      "expected_evidence_quote": "禁止在宿舍楼内燃烧纸屑或其它杂物；禁止在宿舍内使用煤油炉、酒精灯、蜡烛等；",
+      "hit": false,
+      "rank": null,
+      "evidence_hit": false,
+      "evidence_rank": null,
+      "evidence_matches": []
+    },
+    {
+      "id": "safety-two-weeks",
+      "type": "positive",
+      "query": "未请假擅自离校连续多久按退学处理",
+      "expected_behavior": "hit_expected_source",
+      "status": "ok",
+      "elapsed_ms": 142.34,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/11.大连大学学生申诉处理办法.md",
+          "score": 0.6206,
+          "chunk_id": "11.大连大学学生申诉处理办法.md_2",
+          "text_length": 421,
+          "snippet": "者专门会议作出处理、处分决定：\n\n(1)认定事实不存在，或者学校超越职权、违反上位法规定作出决定的；\n\n(2) 认定事实清楚，但认定情节有误、定性不准确，或者适用依据有错误的；\n(3) 认定事实不清、证据不足，或者违反相关规定的程序和权限的。\n\n对变更退学处理或开除学籍处分的，由校长办公会议研究决定。\n\n第十二条 学生申诉委员会应当在15日内将学校复查决定书送达申诉人。送达方式如下：\n\n1.申诉…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/10.大连大学学生违纪管理规定.md",
+          "score": 0.6153,
+          "chunk_id": "10.大连大学学生违纪管理规定.md_11",
+          "text_length": 384,
+          "snippet": "留校察看处分；\n\n（五）未经批准离校连续两周未参加学校规定的教学活动的视为放弃学籍，按自动退学处理。\n\n第二十六条 违反考试纪律的，视其情节给予下列处分：\n\n（一）考场违纪者，视情节给予警告或严重警告处分；\n（二）考场作弊者，视情节给予留校察看以上处分。代替他人或者让他人代替自己参加考试、组织作弊、使用通讯设备或其他器材作弊、向他人出售考试试题或答案牟取利益，以及其他严重作弊或扰乱考试秩序行为的…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/6.大连大学本科学生学籍管理规定.md",
+          "score": 0.3966,
+          "chunk_id": "6.大连大学本科学生学籍管理规定.md_26",
+          "text_length": 500,
+          "snippet": "# 第八章 退 学\n\n第五十条 学生有下列情形之一者，应予退学：\n\n（一）学业成绩未达到学校要求或者在学校规定的学习年限内（含休学、保留学籍）未完成学业的；\n（二）休学、保留学籍期满，在学校规定期限内未提出复学申请或者申请复学经复查不合格的；\n\n（三）根据学校指定医院诊断，患有疾病或者意外伤残不能继续在校学习的；\n（四）未经批准连续两周未参加学校规定的教学活动的；\n（五）超过学校规定期限未注册而…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/5.大连大学学生管理规定.md",
+          "score": 0.3864,
+          "chunk_id": "5.大连大学学生管理规定.md_9",
+          "text_length": 482,
+          "snippet": "# 第六节 退学\n\n第三十五条学生有下列情形之一，学校可予退学处理：\n\n（一）学业成绩未达到学校要求或者在学校规定的学习年限内（含休学、保留学籍）未完成学业的；\n（二）休学、保留学籍期满，在学校规定期限内未提出复学申请或者申请复学经复查不合格的；\n（三）根据学校指定医院诊断，患有疾病或者意外伤残不能继续在校学习的；\n（四）未经批准连续两周未参加学校规定的教学活动的；\n（五）超过学校规定期限未注册…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/5.大连大学学生管理规定.md",
+          "score": 0.3787,
+          "chunk_id": "5.大连大学学生管理规定.md_17",
+          "text_length": 296,
+          "snippet": "的，予以维持；\n(二)认定事实不存在，或者学校超越职权、违反上位法规定作出决定的，责令学校予以撤销；\n(三)认定事实清楚，但认定情节有误、定性不准确，或者适用依据有错误的，责令学校变更或者重新作出决定；\n\n(四)认定事实不清、证据不足，或者违反《普通高等学校学生管理规定》以及学校规定的程序和权限的，责令学校重新作出决定。\n\n第六十九条 自处理、处分或者复查决定书送达之日起，学生在申诉期内未提出申…",
+          "snippet_truncated": true
+        }
+      ],
+      "expected_source": "knowledge_base/cleaned/9.大连大学学生安全教育管理规定.md",
+      "expected_evidence_keywords": [
+        "连续两周",
+        "按退学处理"
+      ],
+      "expected_evidence_quote": "未请假离校连续两周未参加学校规定的教学活动的按退学处理。",
+      "hit": false,
+      "rank": null,
+      "evidence_hit": false,
+      "evidence_rank": null,
+      "evidence_matches": []
+    },
+    {
+      "id": "neg-quantum",
+      "type": "negative",
+      "query": "量子纠缠如何实现超光速通信？",
+      "expected_behavior": "no_hit",
+      "status": "ok",
+      "elapsed_ms": 139.88,
+      "results": [],
+      "note": "域外问题：知识库没有物理通信内容（真实 keyword 模式曾验证拒答）。",
+      "rejected": true
+    },
+    {
+      "id": "neg-library-hours",
+      "type": "negative",
+      "query": "大连大学图书馆每天几点开放、几点闭馆？",
+      "expected_behavior": "no_hit",
+      "status": "ok",
+      "elapsed_ms": 149.19,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/27.大连大学学生宿舍管理规定.md",
+          "score": 0.494,
+          "chunk_id": "27.大连大学学生宿舍管理规定.md_4",
+          "text_length": 137,
+          "snippet": "# 第四章 附 则\n\n第二十七条 学生在宿舍区域内应当自觉遵守以上规定，违反以上规定或有其他违纪行为者，将依据《大连大学违纪学生管理规定》处理。\n\n第二十八条 本规定由学生宿舍管理中心负责解释。\n\n第二十九条 本规定自公布之日起施行，原《大连大学学生宿舍管理规定》同时废止。",
+          "snippet_truncated": false
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/28.大连大学学生寝室安全、纪律、卫生检查标准.md",
+          "score": 0.4934,
+          "chunk_id": "28.大连大学学生寝室安全、纪律、卫生检查标准.md_0",
+          "text_length": 273,
+          "snippet": "为营造安全、健康、温馨、舒适的住宿环境，培养大学生安全防范意识和良好的卫生习惯，规范大学生住宿行为，根据《大连大学学生管理规定》和《大连大学学生宿舍管理规定》制定本标准。\n\n# 一、安全检查标准\n\n1.严禁使用明火，严禁存放易燃易爆危险品、有毒有害物品及管制刀具（如：鞭炮、酒精、蜡烛、刀具等）。\n2.严禁使用或存放发热类、大功率电器（如：电热锅、电吹风、电热棒、电褥子等）。\n3.严禁私扯乱拉或改…",
+          "snippet_truncated": true
+        }
+      ],
+      "note": "原文没有图书馆开放时间（全部 28 篇 cleaned 文档均无“图书馆”字样）。",
+      "rejected": false
+    },
+    {
+      "id": "neg-campus-card",
+      "type": "negative",
+      "query": "校园卡丢了应该去哪个部门补办？",
+      "expected_behavior": "no_hit",
+      "status": "ok",
+      "elapsed_ms": 137.43,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/3.高等学校校园秩序管理若干规定.md",
+          "score": 0.4965,
+          "chunk_id": "3.高等学校校园秩序管理若干规定.md_0",
+          "text_length": 500,
+          "snippet": "（国家教育委员会令第13号）\n\n第一条　为了优化育人环境，加强高等学校校园管理，维护教学、科研、生活秩序和安定团结的局面；建立有利于培养社会主义现代化建设专门人才的校园秩序，制定本规定。\n\n第二条　本规定所称的高等学校（以下简称“学校”）是指全日制普通高等学校和成人高等学校。\n\n本规定所称的师生员工是指学校的教师（包括外籍教师）、学生（包括外国在华留学生）、教育教学辅助人员、管理人员和工勤人员。…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/3.高等学校校园秩序管理若干规定.md",
+          "score": 0.4893,
+          "chunk_id": "3.高等学校校园秩序管理若干规定.md_1",
+          "text_length": 500,
+          "snippet": "进入学校。接受师生员工个人邀请进入学校探亲访友的外国人、港澳台人员，应当履行门卫登记手续后进入学校。\n\n第八条　依照本规定第五条、第六条、第七条的规定进入学校的人员，应当遵守法律、法规、规章和学校的制度，不得从事与其身份不符的活动，不得危害校园治安。\n\n对违反本规定第五条、第六条、第七条和本条前款规定的人员，师生员工有权向学校保卫机构报告，学校保卫机构可以要求其说明情况或者责令其离开学校。\n\n第…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/4.学生伤害事故处理办法.md",
+          "score": 0.4872,
+          "chunk_id": "4.学生伤害事故处理办法.md_7",
+          "text_length": 283,
+          "snippet": "# 第六章 附则\n\n第三十七条　本办法所称学校，是指国家或者社会力量举办的全日制的中小学（含特殊教育学校）、各类中等职业学校、高等学校。\n\n第三十八条 幼儿园发生的幼儿伤害事故，应当根据幼儿为完全无行为能力人的特点，参照本办法处理。\n\n第三十九条　其他教育机构发生的学生伤害事故，参照本办法处理。\n\n在学校注册的其他受教育者在学校管理范围内发生的伤害事故，参照本办法处理。\n\n第四十条　本办法自20…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/3.高等学校校园秩序管理若干规定.md",
+          "score": 0.4847,
+          "chunk_id": "3.高等学校校园秩序管理若干规定.md_3",
+          "text_length": 398,
+          "snippet": "二条、第十三条、第十四条和第十五条的规定的，学校有关机构可以责令其组织者以及其他当事人立即停止活动。违反本规定第十二条第二款的规定，损害国家财产的，学校有关机构可以责令其赔偿损失。\n\n第十七条 禁止无照人员在校园内经商，设在校园内的商业网点必须在指定地点经营。违反前款规定的，学校有关机构可以责令其停止经商活动或者离开校园。\n\n第十八条　对违反本规定，经过劝告、制止仍不改正的师生员工，学校可视情节…",
+          "snippet_truncated": true
+        }
+      ],
+      "note": "原文没有校园卡补办流程。",
+      "rejected": false
+    },
+    {
+      "id": "neg-postgraduate-line",
+      "type": "negative",
+      "query": "2026 年硕士研究生招生复试分数线是多少？",
+      "expected_behavior": "no_hit",
+      "status": "ok",
+      "elapsed_ms": 154.64,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+          "score": 0.4821,
+          "chunk_id": "25.大连大学学士学位授予工作实施细则.md_3",
+          "text_length": 161,
+          "snippet": "# 三、全日制普通高等学校本科生学士学位授予条件\n\n# （一）符合下列条件者，授予学士学位\n\n1.爱祖国，爱人民，遵纪守法，品德端正，认可中国特色社会主义共同理想。\n2.完成培养方案规定的课程、实验、实习和毕业论文（设计）等所有内容，并获得相应的学分，经审核准予毕业。\n3.培养方案中设置的学位课程考核成绩达到 70 分。",
+          "snippet_truncated": false
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+          "score": 0.4777,
+          "chunk_id": "25.大连大学学士学位授予工作实施细则.md_4",
+          "text_length": 173,
+          "snippet": "# （二）有下列情况之一者，不授予学士学位\n\n1.经审核未准予毕业者。\n2.在校学习期间，因不当言论或行为受过处分者。\n3.在校学习期间，因考试作弊受处分者。\n4.在校学习期间，通过重修获得的学分大于等于 30学分（五年制为 35学分）者。\n5.外国语言文学类专业未达到该专业外语规定标准者。\n6.培养方案中设置的学位课程考核成绩未达到70分者。",
+          "snippet_truncated": false
+        },
+        {
+          "rank": 3,
+          "source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+          "score": 0.4765,
+          "chunk_id": "25.大连大学学士学位授予工作实施细则.md_6",
+          "text_length": 500,
+          "snippet": "# （二）有下列情况之一者，不授予学士学位\n\n1.经审核未准予毕业者。\n2.有明显的与中国和中国人民为敌，散布大量对中国不友好的言论，造成恶劣影响者，或者因违法违纪受到法律制裁或在校期间受到相关处分者。\n3.在校学习期间，因考试作弊受处分者。\n\n五、不符合学位授予条件者，（因本细则三（二）1 项或因《大连大学考试违规处理办法》第八条（一）、（二）款所列行为受处分者除外），如果具备下列条件之一，可…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 4,
+          "source": "knowledge_base/cleaned/25.大连大学学士学位授予工作实施细则.md",
+          "score": 0.4739,
+          "chunk_id": "25.大连大学学士学位授予工作实施细则.md_5",
+          "text_length": 252,
+          "snippet": "# 四、全日制外国留学本科生学士学位授予条件\n\n# （一）符合下列条件者，可授予学士学位\n\n1.遵守中国法律法规，尊重中国风俗习惯，遵守学校规章制度，品德端正。\n2.完成本专业留学生培养方案规定的课程、实验、实习和毕业论文（设计）等所有内容，并获得相应的学分，经审核准予毕业。\n3.毕业前文科类专业学生必须达到中国汉语水平考试（HSK）5级195分以\n\n上（汉语言文学专业和汉语国际教育专业必须达到…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 5,
+          "source": "knowledge_base/cleaned/7.大连大学中澳合作办学项目本科学生学籍管理规定.md",
+          "score": 0.4723,
+          "chunk_id": "7.大连大学中澳合作办学项目本科学生学籍管理规定.md_1",
+          "text_length": 500,
+          "snippet": "# 第二章 培养模式\n\n第五条 本规定所指的中澳合作办学项目培养模式是指按照国家招生规定录取至我校中澳合作办学专业学习的本科学生，执行由我校和南十字星大学共同制定的专业培养方案。学生培养以“3+1”模\n\n式实施，需在我校国际学院进行前期基础课程学习，达到南十字星大学入学标准者，可申请赴南十字星大学进行后续的课程学习。\n\n第六条 中澳合作办学项目的专业培养方案和课程教学大纲，根据我校和南十字星大学…",
+          "snippet_truncated": true
+        }
+      ],
+      "note": "原文没有复试分数线；仅有保留入学资格提及研究生招生考试。",
+      "rejected": false
+    },
+    {
+      "id": "neg-express-station",
+      "type": "negative",
+      "query": "学校快递驿站在哪里，怎么取件？",
+      "expected_behavior": "no_hit",
+      "status": "ok",
+      "elapsed_ms": 139.76,
+      "results": [
+        {
+          "rank": 1,
+          "source": "knowledge_base/cleaned/3.高等学校校园秩序管理若干规定.md",
+          "score": 0.4566,
+          "chunk_id": "3.高等学校校园秩序管理若干规定.md_1",
+          "text_length": 500,
+          "snippet": "进入学校。接受师生员工个人邀请进入学校探亲访友的外国人、港澳台人员，应当履行门卫登记手续后进入学校。\n\n第八条　依照本规定第五条、第六条、第七条的规定进入学校的人员，应当遵守法律、法规、规章和学校的制度，不得从事与其身份不符的活动，不得危害校园治安。\n\n对违反本规定第五条、第六条、第七条和本条前款规定的人员，师生员工有权向学校保卫机构报告，学校保卫机构可以要求其说明情况或者责令其离开学校。\n\n第…",
+          "snippet_truncated": true
+        },
+        {
+          "rank": 2,
+          "source": "knowledge_base/cleaned/3.高等学校校园秩序管理若干规定.md",
+          "score": 0.4536,
+          "chunk_id": "3.高等学校校园秩序管理若干规定.md_0",
+          "text_length": 500,
+          "snippet": "（国家教育委员会令第13号）\n\n第一条　为了优化育人环境，加强高等学校校园管理，维护教学、科研、生活秩序和安定团结的局面；建立有利于培养社会主义现代化建设专门人才的校园秩序，制定本规定。\n\n第二条　本规定所称的高等学校（以下简称“学校”）是指全日制普通高等学校和成人高等学校。\n\n本规定所称的师生员工是指学校的教师（包括外籍教师）、学生（包括外国在华留学生）、教育教学辅助人员、管理人员和工勤人员。…",
+          "snippet_truncated": true
+        }
+      ],
+      "note": "原文没有快递驿站信息。",
+      "rejected": false
+    }
+  ],
+  "disclaimer": [
+    "小样本开发回归集，不是 B 的正式评测集 / 独立测试集，不能泛化。",
+    "文档级 Hit@K 与证据覆盖率均不是完整 Recall@K；不要据此宣称检索质量达标。",
+    "证据判定基于检索器返回完整文本（默认最多 500 字符）且来源匹配 expected_source，不是报告展示的 200 字符裁剪片段。",
+    "keyword 模式分数是启发式相关度，不是向量相似度。",
+    "负例命中会如实列出，未通过调阈值或过滤掩盖。",
+    "chroma 真实 BGE 结果需在安装依赖并取得本地模型后由 Codex 复验回填。"
+  ]
+}

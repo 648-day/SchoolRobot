@@ -57,7 +57,10 @@ RAGService（backend/app/services/rag_service.py）
 - 默认阈值 0.35；`local_files_only=True` 不联网下载模型；客户端与嵌入模型惰性加载
   且加锁，避免并发首请求重复加载。
 - 查询会通过 chromadb 打开持久化目录，`PersistentClient` 可能维护底层元数据，不承诺
-  物理文件只读；联调现有库前先备份。真实 BGE + 真实向量库端到端尚未验证。
+  物理文件只读；联调现有库前先备份。真实 BGE + 真实向量库已由 Codex 在独立验证环境
+  （`storage/vector_db/validation-env`）完成冒烟与三轮评测：链路可用，但**跨进程检索结果不稳定、
+  质量验收未通过**（详见 [retrieval_evaluation.md](./retrieval_evaluation.md) 第 5 节），
+  待 B 检查完整持久化 / 索引并用正式评测集复测。
 - 缺依赖 / 缺目录 / 缺集合 / 查询失败一律 503，**不**静默回退 keyword。
 
 ## 诚实说明与边界
