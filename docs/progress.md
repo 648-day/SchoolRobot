@@ -377,4 +377,4 @@ API 冒烟：Ollama qwen3.5:4b；违纪处分五种类型回答正确并引用 [
 - **验收结论**：检索评测工具与资料草稿（新生指引待核验草稿 + 来源登记）**通过**；
   **向量检索质量未通过**（现有库跨进程检索不稳定）。
 - **列 B 待办**：检查完整持久化 / 索引，并用 B 的正式评测集复测；在完成前不宣称检索质量达标。
-- **提交状态**：**尚未执行**，由 Codex 稍后负责（C/OpenCode 未 commit / push / PR）。
+- **提交状态**：Codex 已提交并推送本阶段交付 [eb8f162](https://github.com/648-day/SchoolRobot/commit/eb8f1623e5a381bbb87680f2cbd1d40c0d109ee6) 至 `origin/xiangliang`，远程哈希核验一致；OpenCode 未执行提交。用户原有 `frontend/types/auto/components.d.ts` 改动保留且未提交，未创建 PR、未合并 main。
